@@ -1,0 +1,50 @@
+1. Types:
+    - Short  - Number, Email, text, 
+    - Para - text-area
+    - MCQ
+    - Multiple Correct MCQ
+    - Selection
+    - Date
+    - Time
+    - Rating (TBA)
+   
+2. Validations: (custom error messages)
+    - For text: contains,doesn't contains, regex, length
+    - For Number: max, min
+
+3. useReducer
+4. Preview
+5. Submission
+
+
+
+interfaces:
+
+type Short= {
+    type: String
+    name: String
+    label: String
+    required: Boolean
+    validations: Validations
+}
+
+type Validations= {
+    text: {
+        contains: String
+        doesn't contains: String
+        regex: String
+        Min-length: Number
+        Max-Length: Number
+    }
+    Number: {
+        gt,gte,lt,lte,eq,nte,between,not between
+    }
+}
+
+type Selection= {
+    type: String
+    name: String
+    label: String
+    required: Boolean
+    options: [{}]
+}

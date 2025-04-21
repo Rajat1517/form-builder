@@ -1,0 +1,28 @@
+.container{
+    padding: 0.5rem;
+    height: fit-content;
+    width: 45%;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #fff;
+    color: #1E1E1E;
+}
+
+
+.formItem{
+    padding: 0 1rem;
+    border: 1px solid #000;
+    margin: 1rem;
+    text-align: justify;
+}
+
+.dropZone {
+    border: 2px dashed #ccc;
+    height: 3px;
+    transition: all 0.3s ease;
+}
+
+.dragOver {
+    border-color: #2196f3;
+    background-color: rgba(33, 150, 243, 0.1);
+}

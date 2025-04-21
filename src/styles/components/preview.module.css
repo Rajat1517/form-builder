@@ -1,0 +1,16 @@
+.container{
+    padding: 0.5rem;
+    height: fit-content;
+    width: 45%;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #fff;
+    color: #1E1E1E;
+}
+
+.formItem{
+    padding: 1rem;
+    border: 1px solid black;
+    margin: 1rem;
+    text-align: justify;
+}
