@@ -3,17 +3,19 @@
     min-height: 100vh;
     display: flex;
     justify-content: space-evenly;
-    background-color: #EBF1F6;
+    /* background-color: #94cbf8; */
+    background-image: linear-gradient(to right, #cfd9df, #3e7795) ;
 }
 
 body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.box-shadow{
-    border: 1px solid #03111B;
+.box-shadow{ 
+    border: 1px solid rgba(255,255,255,0.2);
+    /* border: 1px solid #03111B; */
     border-radius: 0.5rem;
-    box-shadow: #000 1px 1px 4px;
+    box-shadow: rgba(0,0,0,0.5) 1px 2px 30px;
 }
 
 .right-pane{
@@ -22,6 +24,7 @@ body{
     justify-content: space-evenly;
     align-items: flex-start;
     flex-wrap: wrap;
+    padding: 5% 3%;
 }
 
 

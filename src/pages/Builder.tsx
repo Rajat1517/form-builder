@@ -38,11 +38,6 @@ const Builder = ()=> {
     <>
     <Lifter/>
     <div className='right-pane'>
-    <header className='header'>
-        <ul>
-            <li>Form Builder</li>
-        </ul>
-    </header>
     <Dropper dispatch={dispatch}/>
     <Preview layout={layout}/>
     </div>

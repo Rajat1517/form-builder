@@ -18,6 +18,12 @@ function Preview({layout}:{layout: Layout;}) {
   return (
     <div className={`${styles.container} box-shadow`}>
         <h2>Preview</h2>
+        {layout.length===0 &&
+        <div className={`${styles.emptyPreview}`}>
+
+            <p className={`${styles.emptyText}`}>Build to see preview</p>
+        </div>
+        }
       <form id="builder" onSubmit={handleSubmit}>
       {layout.map((input: any)=>{   // need to resolve the type error here
 

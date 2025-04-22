@@ -124,7 +124,7 @@ function TextBuilder ({dispatch,index, setBuilders}: {dispatch: React.Dispatch<A
       </form>
       :
       <main>
-       <p>Text Input</p>
+       <p>A {values.required && `mandatory`} text input aganinst the label- "{values.label}"</p>
        <button onClick={()=>{
         setIsEditing(!isEditing)
         setStatus("edit");

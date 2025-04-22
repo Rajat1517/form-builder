@@ -4,8 +4,11 @@
     width: 45%;
     box-sizing: border-box;
     text-align: center;
-    background-color: #fff;
+    /* background-color: #198adb23; */
+    background-color: #ffffff52;
     color: #1E1E1E;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 
@@ -25,4 +28,32 @@
 .dragOver {
     border-color: #2196f3;
     background-color: rgba(33, 150, 243, 0.1);
+}
+
+
+.emptyDrop{
+    border: 0.2rem dashed #007AD3;
+    border-radius: 0.5rem;
+    min-height: 10rem;
+    width: 90%;
+    margin: 5% auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.emptyIcon{
+    width: 10%;
+    min-width: 8%;
+    height: 10%;
+    min-height: 8%;
+    display: inline-block;
+}
+
+.emptyText{
+    color: black;
+    max-width: 40%;
+    margin: 5%;
+    font-size: 1rem;
 }
