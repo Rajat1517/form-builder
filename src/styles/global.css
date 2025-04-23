@@ -33,3 +33,7 @@ body{
     margin: 1% auto;
     height: fit-content;
 }
+
+.input{
+    margin: 0.5rem;
+}

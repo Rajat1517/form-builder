@@ -1,0 +1,10 @@
+.builderCard{
+    position: relative;
+    padding: 0;
+}
+
+.deleteButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+}

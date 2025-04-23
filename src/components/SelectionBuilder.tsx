@@ -1,7 +1,7 @@
 import { type Dispatch, type FormEvent, useState } from 'react'
 import { type SelectionInput, type Action, type Option } from '../global.types';
 import { nanoid } from 'nanoid';
-
+import { Button, TextField } from '@mui/material';
 
 
 function SelectionBuilder({dispatch,index}:{dispatch: Dispatch<Action>; index:number}) {
@@ -50,10 +50,7 @@ function SelectionBuilder({dispatch,index}:{dispatch: Dispatch<Action>; index:nu
             {isEditing?
             <>
                 <form onSubmit={handleSubmit}>
-                    <p>
-                        <label htmlFor='label'>Input Label: </label>
-                        <input type="text" name='label' value={values.label} onChange={e=>setValues(prev=>( {...prev,name:e.target.value, label:e.target.value }))} required />
-                    </p>
+                    <TextField type='text' fullWidth required name='label' id="label" value={values.label} label="Entry Label" variant="standard" onChange={e => setValues(prev => ({ ...prev, label: e.target.value, name: e.target.value }))} slotProps={{ htmlInput: { minLength: 0, maxLength: 255 } }} helperText="Label for your form entry" />
                     <p>
                         <label htmlFor='required'>Required: </label>
                         <input type="checkbox" name='required' checked={values.required} onChange={e=>setValues(prev=>({...prev,required:e.target.checked}))} />
@@ -71,29 +68,23 @@ function SelectionBuilder({dispatch,index}:{dispatch: Dispatch<Action>; index:nu
 
                     {addOption &&
                     <>
-                        <p>
-                            <label htmlFor="content">Content</label>
-                            <input type="text" name="content" onChange={(e)=> setOption(prev=>({...prev,content: e.target.value}))} />
-                        </p>
-                        <p>
-                            <label htmlFor="value">Value</label>
-                            <input type="text" name="value" onChange={(e)=> setOption(prev=>({...prev,value: e.target.value}))} />
-                        </p>
+                        <TextField type='text' required name='content' id="content" label="Content" variant="standard" onChange={(e)=> setOption(prev=>({...prev,content: e.target.value}))}slotProps={{ htmlInput: { minLength: 0, maxLength: 255 } }} />
+                        <TextField type='text' required name='value' id="value" label="Value" variant="standard" onChange={(e)=> setOption(prev=>({...prev,value: e.target.value}))} slotProps={{ htmlInput: { minLength: 0, maxLength: 255 } }} />
                         <button type='button' onClick={handleAddOption}>Update Option</button>
                     </>
                     }
-                    <button type='button' onClick={()=> setAddOption(prev=>!prev)} >Add Option</button>
+                    {!addOption && <button type='button' onClick={()=> setAddOption(prev=>!prev)} >Add Option</button>}
                     <button>Build</button>
                 </form>
-                <p>{commonError}</p>
+                <p style={{color: "red"}}>{commonError}</p>
             </>
             : 
             <main>
                 <p>Selection Input</p>
-                <button onClick={()=>{
+                <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block" }} onClick={() => {
                     setIsEditing(!isEditing)
                     setStatus("edit");
-                }}>Edit</button>
+                }} >Edit</Button>
             </main>}
             
         </div>
