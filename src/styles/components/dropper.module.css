@@ -4,7 +4,6 @@
     width: 45%;
     box-sizing: border-box;
     text-align: center;
-    /* background-color: #198adb23; */
     background-color: #ffffff52;
     color: #1E1E1E;
     backdrop-filter: blur(10px);
@@ -13,22 +12,37 @@
 
 
 .formItem{
-    padding: 0 1rem;
     border: 0.2rem solid #007AD3;
     border-radius: 0.5rem;
     margin: 1rem;
     text-align: justify;
 }
 
-.dropZone {
-    border: 2px dashed #ccc;
-    height: 3px;
+.dropZoneTop {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 5px;
     transition: all 0.3s ease;
+    margin-top: 0;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.dropZoneDown {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+    transition: all 0.3s ease;
+    margin-bottom: 0;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
 }
 
 .dragOver {
-    border-color: #2196f3;
-    background-color: rgba(33, 150, 243, 0.1);
+   background-color: #007AD3;
+   box-shadow: 0 5px 20px black;
 }
 
 
@@ -45,9 +59,9 @@
 
 
 .emptyIcon{
-    width: 10%;
+    width: 20%;
     min-width: 8%;
-    height: 10%;
+    height: 20%;
     min-height: 8%;
     display: inline-block;
 }
@@ -68,4 +82,24 @@
     position: absolute;
     top: 0;
     right: 0;
+    padding: 0;
+}
+
+.deleteIcon{
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+}
+
+.deleteIcon:hover{
+    box-shadow: rgba(0,0,0,0.5) 1px 2px 8px;
+    border-radius: 100%;
+}
+
+.form{
+    padding: 1rem;
+}
+
+.textFields{
+    padding: 0.5rem 0 !important;
 }

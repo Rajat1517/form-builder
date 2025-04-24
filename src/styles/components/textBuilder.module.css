@@ -7,4 +7,14 @@
     position: absolute;
     top: 0;
     right: 0;
+    border: none;
+    outline: none;
+    border-radius: 10rem;
+    background: none;
+    color: red;
+    font-size: 1.2em;
+}
+
+.deleteButton:hover{
+    color: rgb(241, 215, 215);
 }
