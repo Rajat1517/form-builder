@@ -7,12 +7,17 @@
     position: absolute;
     top: 0;
     right: 0;
+    color: red;
+    font-size: 1.2em;
+}
+
+.iconButton{
     border: none;
     outline: none;
     border-radius: 10rem;
     background: none;
-    color: red;
-    font-size: 1.2em;
+    margin: 0;
+    padding: 0;
 }
 
 .deleteButton:hover{
