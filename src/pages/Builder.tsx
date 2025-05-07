@@ -27,6 +27,8 @@ const Builder = ()=> {
                     action.payload,
                     ...state.slice(index + (status === "build" ? 0 : 1))
                 ];
+            case "delete":
+                return [...state.slice(0,index),...state.slice(index+1)]
             default:
                 return state;
         }

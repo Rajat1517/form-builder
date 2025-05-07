@@ -1,6 +1,7 @@
 .container{
     padding: 1rem 2rem;
-    min-height: 100vh;
+    height: 100vh;
+    min-height: fit-content;
     max-width: fit-content;
     box-sizing: border-box;
     border-radius: 0;
@@ -8,4 +9,15 @@
     background-color: #03111B;
     color: #fff;
     position: sticky;
+    left: 0;
+    top: 0;
 }
+
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+
+
