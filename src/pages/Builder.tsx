@@ -12,14 +12,8 @@ const Builder = ()=> {
         console.log(action.payload.id, action.payload.index);
         switch(action.type){
             case "text":
-                if(index>= state.length && status === "build")
-                    return [...state, action.payload ];
-                return [
-                    ...state.slice(0, index),
-                    action.payload,
-                    ...state.slice(index + (status === "build" ? 0 : 1))
-                ];
             case "select":
+            case "radio":
                 if(index>= state.length && status === "build")
                     return [...state, action.payload ];
                 return [

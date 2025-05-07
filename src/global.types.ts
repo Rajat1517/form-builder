@@ -40,3 +40,7 @@ export interface SelectionInput extends Input{
     multiple?: boolean;
     options: Option[];
 }
+
+export interface RadioInput extends Input{
+    options: Option[];
+}

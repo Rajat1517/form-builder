@@ -78,12 +78,27 @@ function Preview({ layout }: { layout: Layout; }) {
                                     </FormControl>
                                 </div>
                             )
+                        case "radio":
+                            return (
+                                <p key={id} className={styles.formItem}>
+                                    <label htmlFor={name}>{label}: </label>
+                                    {options.map((option:Option)=>{
+                                        return(
+                                            <span key={option.id}>
+                                                <label htmlFor={name} >{option.content}</label>
+                                                <input type='radio' name={name} required={required} value={option.value} />
+                                            </span>
+                                        )
+                                    })}
+
+                                </p>
+                            )
                         default:
                             return <></>
                     }
 
                 })}
-                {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' sx={{margin: "0.5rem"}}>Submit</Button>}
+                {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' sx={{ margin: "0.5rem" }}>Submit</Button>}
             </form>
         </div>
     )

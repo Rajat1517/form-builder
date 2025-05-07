@@ -4,6 +4,7 @@ import SelectionBuilder from './SelectionBuilder';
 import styles from "../styles/components/dropper.module.css"
 import { Action } from '../global.types';
 import { nanoid } from 'nanoid';
+import RadioBuilder from './RadioBuilder';
 
 export type BiulderState = { data: string; id: string; }
 
@@ -29,6 +30,10 @@ function Dropper({ dispatch }: { dispatch: Dispatch<Action> }) {
                 return (<>
                     <SelectionBuilder dispatch={dispatch} index={index} setBuilders={setBuilders} />
                 </>)
+            case "radio":
+                return(
+                    <><RadioBuilder dispatch={dispatch} index={index} setBuilders={setBuilders}/></>
+                )
             default:
                 return null
         }
