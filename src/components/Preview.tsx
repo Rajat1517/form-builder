@@ -1,7 +1,19 @@
 import React from 'react'
 import type { Layout, Option } from '../global.types';
 import styles from "../styles/components/preview.module.css";
-import { TextField, FormControl, Select, MenuItem, InputLabel, Button } from '@mui/material';
+import {
+    TextField,
+    FormControl,
+    Select,
+    MenuItem,
+    InputLabel,
+    Button,
+    Radio,
+    RadioGroup,
+    FormControlLabel,
+    FormLabel
+} from '@mui/material';
+
 function Preview({ layout }: { layout: Layout; }) {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -62,10 +74,6 @@ function Preview({ layout }: { layout: Layout; }) {
                         case "select":
                             return (
                                 <div className={styles.formItem} key={id}>
-                                    {/* <label htmlFor={name}>{label}: </label>
-                                    <select name={name} required={required} >
-                                        {options.map((option: Option) => <option key={option.id} value={option.value}>{option.content}</option>)}
-                                    </select> */}
                                     <FormControl variant='standard' fullWidth>
                                         <InputLabel>{label}</InputLabel>
                                         <Select
@@ -80,18 +88,24 @@ function Preview({ layout }: { layout: Layout; }) {
                             )
                         case "radio":
                             return (
-                                <p key={id} className={styles.formItem}>
-                                    <label htmlFor={name}>{label}: </label>
-                                    {options.map((option:Option)=>{
-                                        return(
-                                            <span key={option.id}>
-                                                <label htmlFor={name} >{option.content}</label>
-                                                <input type='radio' name={name} required={required} value={option.value} />
-                                            </span>
-                                        )
-                                    })}
-
-                                </p>
+                                <div key={id} className={styles.formItem}>
+                                    <FormControl variant="standard" fullWidth>
+                                        <FormLabel>{label}</FormLabel>
+                                        <RadioGroup
+                                            name={name}
+                                            row
+                                        >
+                                            {options.map((option: Option) => (
+                                                <FormControlLabel
+                                                    key={option.id}
+                                                    value={option.value}
+                                                    control={<Radio required={required} />}
+                                                    label={option.content}
+                                                />
+                                            ))}
+                                        </RadioGroup>
+                                    </FormControl>
+                                </div>
                             )
                         default:
                             return <></>
