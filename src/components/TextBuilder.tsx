@@ -215,8 +215,9 @@ function TextBuilder({ dispatch, index, setBuilders }: { dispatch: React.Dispatc
             handleDrop(e, index + 1);
           }}
         >
-          <p>{values.label}: A {values.required && `mandatory`} text input.</p>
-          <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block", margin: "1rem 0 0 0" }} onClick={() => {
+          <h4 className={`${textStyles.description}`}>{values.label}</h4>
+          <p className={`${textStyles.description}`}> {values.required && `Mandatory`} Text input.</p>
+          <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block"}} onClick={() => {
             setIsEditing(!isEditing)
             setStatus("edit");
           }} >Edit</Button>

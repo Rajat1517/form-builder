@@ -154,20 +154,20 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                             <>
                                 <p>
                                     <label htmlFor="min">Minimum Time: </label>
-                                    <input type="time" name="min" value={values.validation?.time?.min} onChange={(e)=>{
-                                        let validation= values.validation;
-                                        validation!.time!.min= e.target.value;
-                                        setValues(prev=>({...prev,validation}));
-                                    }}/>
+                                    <input type="time" name="min" value={values.validation?.time?.min} onChange={(e) => {
+                                        let validation = values.validation;
+                                        validation!.time!.min = e.target.value;
+                                        setValues(prev => ({ ...prev, validation }));
+                                    }} />
                                 </p>
                                 <p>
                                     <label htmlFor="max">Maximum Time: </label>
                                     <input type="time" name='max' value={values.validation?.time?.max} min={values.validation?.time?.min}
-                                    onChange={(e)=>{
-                                        let validation= values.validation;
-                                        validation!.time!.max= e.target.value;
-                                        setValues(prev=>({...prev,validation}));
-                                    }}/>
+                                        onChange={(e) => {
+                                            let validation = values.validation;
+                                            validation!.time!.max = e.target.value;
+                                            setValues(prev => ({ ...prev, validation }));
+                                        }} />
                                 </p>
                             </>
                         }
@@ -176,7 +176,8 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                 </>
                 :
                 <main className={styles.form}>
-                    <p>Time Input</p>
+                   <h4 className={`${textStyles.description}`}>{values.label}</h4>
+                    <p className={`${textStyles.description}`}> {values.required ? "Mandatory" : ""} Time Input</p>
                     <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block" }} onClick={() => {
                         setIsEditing(!isEditing)
                         setStatus("edit");

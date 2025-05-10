@@ -134,15 +134,15 @@ function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                             control={
                                 <Checkbox
                                     checked={hasValidations}
-                                    onChange={() => { 
-                                        if(hasValidations){
-                                            let validation= values.validation;
+                                    onChange={() => {
+                                        if (hasValidations) {
+                                            let validation = values.validation;
                                             delete validation!.date!.min;
                                             delete validation!.date!.max;
-                                            setValues(prev=>({...prev,validation}));
+                                            setValues(prev => ({ ...prev, validation }));
                                         }
                                         setHasValidations(prev => !prev)
-                                     }}
+                                    }}
                                     icon={<ToggleOffIcon fontSize='large' />}
                                     checkedIcon={<ToggleOnIcon fontSize='large' />}
                                 />
@@ -168,7 +168,7 @@ function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                                             let validation = prev.validation;
                                             validation!.date!.max = new Date(e.target.value);
                                             return ({ ...prev, validation });
-                                        })} 
+                                        })}
                                     />
                                 </p>
                             </>
@@ -178,7 +178,8 @@ function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                 </>
                 :
                 <main className={styles.form}>
-                    <p>Date Input</p>
+                   <h4 className={`${textStyles.description}`}>{values.label}</h4>
+                    <p className={`${textStyles.description}`}> {values.required ? "Mandatory" : ""} Date Input</p>
                     <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block" }} onClick={() => {
                         setIsEditing(!isEditing)
                         setStatus("edit");
