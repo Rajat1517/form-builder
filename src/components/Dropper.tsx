@@ -1,10 +1,11 @@
 import React, { type Dispatch, useState, type DragEvent } from 'react'
 import TextBuilder from './TextBuilder';
 import SelectionBuilder from './SelectionBuilder';
+import RadioBuilder from './RadioBuilder';
+import DateBuilder from './DateBuilder';
 import styles from "../styles/components/dropper.module.css"
 import { Action } from '../global.types';
 import { nanoid } from 'nanoid';
-import RadioBuilder from './RadioBuilder';
 
 export type BiulderState = { data: string; id: string; }
 
@@ -33,6 +34,10 @@ function Dropper({ dispatch }: { dispatch: Dispatch<Action> }) {
             case "radio":
                 return(
                     <><RadioBuilder dispatch={dispatch} index={index} setBuilders={setBuilders}/></>
+                )
+            case "date":
+                return(
+                    <DateBuilder dispatch={dispatch} index={index} setBuilders={setBuilders}/>
                 )
             default:
                 return null

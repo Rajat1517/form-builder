@@ -9,11 +9,12 @@ const Builder = ()=> {
     const reducer = (state: Layout, action: Action): Layout => {
 
         const {index,status}= action.payload;
-        console.log(action.payload.id, action.payload.index);
+        
         switch(action.type){
             case "text":
             case "select":
             case "radio":
+            case "date":
                 if(index>= state.length && status === "build")
                     return [...state, action.payload ];
                 return [

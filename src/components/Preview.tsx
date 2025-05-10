@@ -45,8 +45,6 @@ function Preview({ layout }: { layout: Layout; }) {
                     const getValidationProps = () => {
                         if (!validation) return {};
                         let validationProps = {};
-
-
                         if (validation?.text) {
                             const { regex, maxLength, minLength } = validation.text;
 
@@ -58,6 +56,16 @@ function Preview({ layout }: { layout: Layout; }) {
                             }
                             if (regex) {
                                 validationProps = { ...validationProps, pattern: regex };
+                            }
+                        }
+
+                        if(validation?.date){
+                            const {min,max}= validation.date;
+                            if(min){
+                                validationProps= {...validationProps, min: min.toISOString().split("T")[0]};
+                            }
+                            if(max){
+                                validationProps= {...validationProps, max: max.toISOString().split("T")[0]};
                             }
                         }
                         return validationProps;
@@ -105,6 +113,13 @@ function Preview({ layout }: { layout: Layout; }) {
                                             ))}
                                         </RadioGroup>
                                     </FormControl>
+                                </div>
+                            )
+                        case "date":
+                            return(
+                                <div key={id} className={styles.formItem}>
+                                    <label htmlFor={name}>{label}: </label>
+                                    <input type="date" name={name} required={required} {...getValidationProps()} />
                                 </div>
                             )
                         default:

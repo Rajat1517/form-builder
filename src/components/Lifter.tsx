@@ -20,6 +20,9 @@ function Lifter() {
       <p draggable onDragStart={(e)=>{
         e.dataTransfer.setData("text/plain","radio");
       }}>Radio Input</p>
+      <p draggable onDragStart={(e)=>{
+        e.dataTransfer.setData("text/plain","date");
+      }}>Date Input</p>
     </div>
   )
 }

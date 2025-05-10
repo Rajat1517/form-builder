@@ -10,6 +10,10 @@ export type Validation= {
         maxLength?: number;
         minLength?: number;
     };
+    date?:{
+        min?: Date;
+        max?: Date;
+    }
 }
 
 export interface Input {
@@ -26,9 +30,9 @@ export interface TextInput extends Input {
     validation?: Validation;
 }
 
-export type Layout= (TextInput|SelectionInput)[];
+export type Layout= (TextInput|SelectionInput|RadioInput|DateInput)[];
 
-export type Action= {type: string; payload: TextInput|SelectionInput}
+export type Action= {type: string; payload: TextInput|SelectionInput|RadioInput|DateInput}
 
 export type Option= {
     value: string;
@@ -43,4 +47,9 @@ export interface SelectionInput extends Input{
 
 export interface RadioInput extends Input{
     options: Option[];
+}
+
+
+export interface DateInput extends Input{
+    validation?: Validation;
 }
