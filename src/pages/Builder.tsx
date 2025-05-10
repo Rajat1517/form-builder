@@ -15,6 +15,7 @@ const Builder = ()=> {
             case "select":
             case "radio":
             case "date":
+            case "time":
                 if(index>= state.length && status === "build")
                     return [...state, action.payload ];
                 return [

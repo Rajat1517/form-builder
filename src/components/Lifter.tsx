@@ -23,6 +23,9 @@ function Lifter() {
       <p draggable onDragStart={(e)=>{
         e.dataTransfer.setData("text/plain","date");
       }}>Date Input</p>
+      <p draggable onDragStart={(e)=>{
+        e.dataTransfer.setData("text/plain","time");
+      }}>Time Input</p>
     </div>
   )
 }

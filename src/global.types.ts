@@ -13,6 +13,11 @@ export type Validation= {
     date?:{
         min?: Date;
         max?: Date;
+    };
+
+    time?:{
+        min?: string;
+        max?: string;
     }
 }
 
@@ -51,5 +56,9 @@ export interface RadioInput extends Input{
 
 
 export interface DateInput extends Input{
+    validation?: Validation;
+}
+
+export interface TimeInput extends Input{
     validation?: Validation;
 }

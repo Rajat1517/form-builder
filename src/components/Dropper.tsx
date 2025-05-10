@@ -6,6 +6,7 @@ import DateBuilder from './DateBuilder';
 import styles from "../styles/components/dropper.module.css"
 import { Action } from '../global.types';
 import { nanoid } from 'nanoid';
+import TimeBuilder from './TimeBuilder';
 
 export type BiulderState = { data: string; id: string; }
 
@@ -38,6 +39,10 @@ function Dropper({ dispatch }: { dispatch: Dispatch<Action> }) {
             case "date":
                 return(
                     <DateBuilder dispatch={dispatch} index={index} setBuilders={setBuilders}/>
+                )
+            case "time":
+                return(
+                    <TimeBuilder dispatch={dispatch} index={index} setBuilders={setBuilders}/>
                 )
             default:
                 return null

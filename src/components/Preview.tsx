@@ -68,6 +68,15 @@ function Preview({ layout }: { layout: Layout; }) {
                                 validationProps= {...validationProps, max: max.toISOString().split("T")[0]};
                             }
                         }
+
+                        if(validation?.time){
+                            const {min,max}= validation.time;
+                            if(min){
+                                validationProps= {...validationProps, min};
+                            }
+                            if(max) validationProps= {...validationProps, max};
+                        }
+                        
                         return validationProps;
                     }
 
@@ -120,6 +129,13 @@ function Preview({ layout }: { layout: Layout; }) {
                                 <div key={id} className={styles.formItem}>
                                     <label htmlFor={name}>{label}: </label>
                                     <input type="date" name={name} required={required} {...getValidationProps()} />
+                                </div>
+                            )
+                        case "time":
+                            return(
+                                <div key={id} className={styles.formItem}>
+                                    <label htmlFor={name}>{label}: </label>
+                                    <input type='time' name={name} required={required} {...getValidationProps()}/>
                                 </div>
                             )
                         default:
