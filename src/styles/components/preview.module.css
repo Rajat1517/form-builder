@@ -40,3 +40,44 @@
     font-size: 1rem;
     margin: 0;
 }
+
+.toggler{
+    display: none;
+}
+
+
+
+@media screen and (max-width: 715px){
+    .container{
+        width: 90%;
+    }
+    .preview{
+        overflow: scroll;
+        transition: max-height 500ms ease-in-out;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 2rem;
+    }
+
+    .preview::-webkit-scrollbar{
+        display: none;
+    }
+
+    .collapsed{
+        max-height: 0;
+    }
+
+    .expanded{
+        max-height: 30rem;
+    }
+
+    .toggler{
+        display: block;
+    }
+}

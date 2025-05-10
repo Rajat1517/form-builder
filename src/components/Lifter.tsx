@@ -1,5 +1,7 @@
+import { useState } from "react";
 import styles from "../styles/components/lifter.module.css";
 function Lifter() {
+  const [collapsed,setCollapsed]= useState(true);
   return (
     <div className={`${styles.container}`}>
       <div className={styles.logo}>
@@ -9,8 +11,10 @@ function Lifter() {
         <p>Form Builder</p>
       </div>
 
-
-      <h2>Components</h2>
+      <div className={`${styles.components} `}>
+      {/* <h3 className={styles.hidden}>Components</h3> */}
+      <h3 className={`${styles.visible} ${styles.heading}`} onClick={()=>setCollapsed(prev=>!prev)}>Components</h3>
+      <div className={`${styles.lifter} ${collapsed? styles.collapsed:styles.expanded}`}>
       <p draggable onDragStart={e => {
         e.dataTransfer.setData("text/plain", "text")
       }}>Text Input</p>
@@ -26,6 +30,8 @@ function Lifter() {
       <p draggable onDragStart={(e)=>{
         e.dataTransfer.setData("text/plain","time");
       }}>Time Input</p>
+      </div>
+      </div>
     </div>
   )
 }

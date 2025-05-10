@@ -3,7 +3,6 @@
     min-height: 100vh;
     display: flex;
     justify-content: space-evenly;
-    /* background-color: #94cbf8; */
     background-image: linear-gradient(to right, #cfd9df, #3e7795) ;
 }
 
@@ -13,7 +12,6 @@ body{
 
 .box-shadow{ 
     border: 1px solid rgba(255,255,255,0.2);
-    /* border: 1px solid #03111B; */
     border-radius: 0.5rem;
     box-shadow: rgba(0,0,0,0.5) 1px 2px 30px;
 }
@@ -36,4 +34,20 @@ body{
 
 .input{
     margin: 0.5rem;
+}
+
+
+
+@media screen and (max-width: 715px){
+    .App{
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .right-pane{
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        gap: 3rem;
+    }
 }

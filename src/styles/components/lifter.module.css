@@ -2,7 +2,7 @@
     padding: 1rem 2rem;
     height: 100vh;
     min-height: fit-content;
-    max-width: fit-content;
+    width: 18%;
     box-sizing: border-box;
     border-radius: 0;
     margin: 0;
@@ -20,4 +20,44 @@
     gap: 0.5rem;
 }
 
+.heading{
+    cursor: pointer;;
+}
+
+
+@media screen and (max-width: 715px){
+    .container{
+        min-width: 100vw;
+        display: flex;
+        justify-content: space-between;
+        height: fit-content;
+        align-items: center;
+        z-index: 1;
+    }
+    .lifter{
+        overflow: hidden;
+        display: inline-block;
+        transition: height 500ms ease-in-out;
+    }
+    .components{
+        text-align: center;
+        height: fit-content;
+    }
+    .collapsed{
+        height: 0;
+    }
+    
+    .expanded{
+        height: 12rem;
+    }
+
+    .hidden{
+        display: none;
+        margin: 0;
+    }
+    .visible{
+        display: block;
+        margin: 0;
+    }
+}
 

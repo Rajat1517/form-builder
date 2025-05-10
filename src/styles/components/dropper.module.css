@@ -165,3 +165,45 @@
 .disabledIcon:hover{
     box-shadow: none;
 }
+
+.toggler{
+    display: none;
+    cursor: pointer;
+}
+
+
+@media screen and (max-width: 715px){
+    .container{
+        width: 90%;
+    }
+
+    .header{
+        display: flex;
+        justify-content: space-between;
+        margin: 0 2rem;
+        align-items: center;
+    }
+
+    .catcher{
+        overflow: scroll;
+        transition: max-height 500ms ease-in-out;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .catcher::-webkit-scrollbar{
+        display: none;
+    }
+
+    .collapsed{
+        max-height: 0;
+    }
+
+    .expanded{
+        max-height: 30rem;
+    }
+
+    .toggler{
+        display: block;
+    }
+}
