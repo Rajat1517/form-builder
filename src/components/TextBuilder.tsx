@@ -4,7 +4,7 @@ import type { Action, TextInput } from "../global.types";
 import { nanoid } from 'nanoid';
 import styles from "../styles/components/dropper.module.css"
 import type { BiulderState } from './Dropper';
-import textStyles from "../styles/components/textBuilder.module.css";
+import textStyles from "../styles/components/builders.module.css";
 import { Button, TextField, Checkbox, FormControlLabel } from '@mui/material';
 import ToggleOffIcon from "@mui/icons-material/ToggleOff"
 import ToggleOnIcon from "@mui/icons-material/ToggleOn"
