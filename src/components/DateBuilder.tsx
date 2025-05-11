@@ -1,4 +1,4 @@
-import { type Dispatch, type FormEvent, useState, type DragEvent, type SetStateAction } from 'react'
+import { type Dispatch, type FormEvent, useState, type DragEvent, type SetStateAction, ChangeEvent } from 'react'
 import type { Action, DateInput } from '../global.types';
 import { nanoid } from 'nanoid';
 import { type BiulderState } from './Dropper';
@@ -7,6 +7,7 @@ import styles from "../styles/components/dropper.module.css"
 import textStyles from "../styles/components/builders.module.css";
 import ToggleOffIcon from "@mui/icons-material/ToggleOff"
 import ToggleOnIcon from "@mui/icons-material/ToggleOn"
+import DatePicker from './DatePicker';
 
 function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Action>; index: number; setBuilders: Dispatch<SetStateAction<BiulderState[]>> }) {
 
@@ -153,23 +154,20 @@ function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                         {hasValidations &&
                             <>
                                 <p>
-                                    <label htmlFor="min">Minimum Date: </label>
-                                    <input type="date" name='min' value={(values.validation?.date?.min)?.toISOString().split("T")[0]}
-                                        onChange={(e) => setValues(prev => {
+                                    <DatePicker label='Minimum Date' name='min' value={(values.validation?.date?.min)?.toISOString().split("T")[0]!}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setValues(prev => {
                                             let validation = prev.validation;
                                             validation!.date!.min = new Date(e.target.value);
                                             return ({ ...prev, validation });
                                         })} />
                                 </p>
                                 <p>
-                                    <label htmlFor="max">Maximum Date: </label>
-                                    <input type="date" name='max' min={(values.validation?.date?.min)?.toISOString().split("T")[0]} value={(values.validation?.date?.max)?.toISOString().split("T")[0]}
-                                        onChange={(e) => setValues(prev => {
+                                    <DatePicker label='Maximum Date' name='max' min={(values.validation?.date?.min)?.toISOString().split("T")[0]} value={(values.validation?.date?.max)?.toISOString().split("T")[0]!}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setValues(prev => {
                                             let validation = prev.validation;
                                             validation!.date!.max = new Date(e.target.value);
                                             return ({ ...prev, validation });
-                                        })}
-                                    />
+                                        })} />
                                 </p>
                             </>
                         }
@@ -178,7 +176,7 @@ function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                 </>
                 :
                 <main className={styles.form}>
-                   <h4 className={`${textStyles.description}`}>{values.label}</h4>
+                    <h4 className={`${textStyles.description}`}>{values.label}</h4>
                     <p className={`${textStyles.description}`}> {values.required ? "Mandatory" : ""} Date Input</p>
                     <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block" }} onClick={() => {
                         setIsEditing(!isEditing)

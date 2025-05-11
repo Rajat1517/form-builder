@@ -13,6 +13,8 @@ import {
     FormControlLabel,
     FormLabel
 } from '@mui/material';
+import DatePicker from './DatePicker';
+import TimePicker from './TimePicker';
 
 function Preview({ layout }: { layout: Layout; }) {
 
@@ -135,15 +137,13 @@ function Preview({ layout }: { layout: Layout; }) {
                             case "date":
                                 return (
                                     <div key={id} className={styles.formItem}>
-                                        <label htmlFor={name}>{label}: </label>
-                                        <input type="date" name={name} required={required} {...getValidationProps()} />
+                                        <DatePicker label={label} name={name} required={required} {...getValidationProps()}  />
                                     </div>
                                 )
                             case "time":
                                 return (
                                     <div key={id} className={styles.formItem}>
-                                        <label htmlFor={name}>{label}: </label>
-                                        <input type='time' name={name} required={required} {...getValidationProps()} />
+                                        <TimePicker label={label} name={name} required={required} {...getValidationProps()}/>
                                     </div>
                                 )
                             default:

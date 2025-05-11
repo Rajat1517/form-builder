@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../styles/components/lifter.module.css";
 function Lifter() {
-  const [collapsed,setCollapsed]= useState(true);
+  const [collapsed, setCollapsed] = useState(true);
   return (
     <div className={`${styles.container}`}>
       <div className={styles.logo}>
@@ -10,27 +10,42 @@ function Lifter() {
         </svg>
         <p>Form Builder</p>
       </div>
-
       <div className={`${styles.components} `}>
-      {/* <h3 className={styles.hidden}>Components</h3> */}
-      <h3 className={`${styles.visible} ${styles.heading}`} onClick={()=>setCollapsed(prev=>!prev)}>Components</h3>
-      <div className={`${styles.lifter} ${collapsed? styles.collapsed:styles.expanded}`}>
-      <p draggable onDragStart={e => {
-        e.dataTransfer.setData("text/plain", "text")
-      }}>Text Input</p>
-      <p draggable onDragStart={e => {
-        e.dataTransfer.setData("text/plain", "select")
-      }}>Selection Input</p>
-      <p draggable onDragStart={(e)=>{
-        e.dataTransfer.setData("text/plain","radio");
-      }}>Radio Input</p>
-      <p draggable onDragStart={(e)=>{
-        e.dataTransfer.setData("text/plain","date");
-      }}>Date Input</p>
-      <p draggable onDragStart={(e)=>{
-        e.dataTransfer.setData("text/plain","time");
-      }}>Time Input</p>
-      </div>
+        <h3 className={`${styles.visible} ${styles.heading}`} onClick={() => setCollapsed(prev => !prev)}>Components</h3>
+        <div className={`${styles.lifter} ${collapsed ? styles.collapsed : styles.expanded}`}>
+          <p draggable className={styles.draggable} onDragStart={e => {
+            e.dataTransfer.setData("text/plain", "text")
+          }}>Text Input</p>
+          <p draggable className={styles.draggable} onDragStart={e => {
+            e.dataTransfer.setData("text/plain", "select")
+          }}>Selection Input</p>
+          <p draggable className={styles.draggable} onDragStart={(e) => {
+            e.dataTransfer.setData("text/plain", "radio");
+          }}>Radio Input</p>
+          <p draggable className={styles.draggable} onDragStart={(e) => {
+            e.dataTransfer.setData("text/plain", "date");
+          }}>Date Input</p>
+          <p draggable className={styles.draggable} onDragStart={(e) => {
+            e.dataTransfer.setData("text/plain", "time");
+          }}>Time Input</p>
+        </div>
+        <div className={`${styles.lifterDesktop}`}>
+          <p draggable className={styles.draggable} onDragStart={e => {
+            e.dataTransfer.setData("text/plain", "text")
+          }}>Text Input</p>
+          <p draggable className={styles.draggable} onDragStart={e => {
+            e.dataTransfer.setData("text/plain", "select")
+          }}>Selection Input</p>
+          <p draggable className={styles.draggable} onDragStart={(e) => {
+            e.dataTransfer.setData("text/plain", "radio");
+          }}>Radio Input</p>
+          <p draggable className={styles.draggable} onDragStart={(e) => {
+            e.dataTransfer.setData("text/plain", "date");
+          }}>Date Input</p>
+          <p draggable className={styles.draggable} onDragStart={(e) => {
+            e.dataTransfer.setData("text/plain", "time");
+          }}>Time Input</p>
+        </div>
       </div>
     </div>
   )

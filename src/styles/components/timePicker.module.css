@@ -1,0 +1,49 @@
+
+.timeInput{
+    padding: 0.8rem 0.4rem;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+    outline: none;
+    width: 100%;
+    background: none;
+    position: relative;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.timeInput:hover{
+    border-width: 2px;
+    color: black;
+}
+
+
+.timeInput:focus{
+    border-color: #1976d2;
+    color: black;
+}
+
+
+.timeLabel{
+    position: absolute;
+    top: -8px;
+    font-size: 0.7rem;
+    color: rgba(0, 0, 0, 0.6);
+    padding: 0 4px;
+    pointer-events: none;
+    transition: 0.2s ease all;
+}
+
+
+.timeInput:focus+.timeLabel{
+    color: #1976d2;
+}
+
+.timeInput:hover:not(:focus)+.timeLabel{
+    color: #000;
+}
+
+.timeInput, .timeLabel{
+    display: block;
+    box-sizing: border-box;
+}

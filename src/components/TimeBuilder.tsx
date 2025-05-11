@@ -7,6 +7,7 @@ import styles from "../styles/components/dropper.module.css"
 import textStyles from "../styles/components/builders.module.css";
 import ToggleOffIcon from "@mui/icons-material/ToggleOff"
 import ToggleOnIcon from "@mui/icons-material/ToggleOn"
+import TimePicker from './TimePicker';
 
 function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Action>; index: number; setBuilders: Dispatch<SetStateAction<BiulderState[]>> }) {
 
@@ -153,16 +154,15 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                         {hasValidations &&
                             <>
                                 <p>
-                                    <label htmlFor="min">Minimum Time: </label>
-                                    <input type="time" name="min" value={values.validation?.time?.min} onChange={(e) => {
-                                        let validation = values.validation;
-                                        validation!.time!.min = e.target.value;
-                                        setValues(prev => ({ ...prev, validation }));
-                                    }} />
+                                    <TimePicker label='Minimum Time' name='min' value={values.validation?.time?.min}
+                                        onChange={(e) => {
+                                            let validation = values.validation;
+                                            validation!.time!.min = e.target.value;
+                                            setValues(prev => ({ ...prev, validation }));
+                                        }} />
                                 </p>
                                 <p>
-                                    <label htmlFor="max">Maximum Time: </label>
-                                    <input type="time" name='max' value={values.validation?.time?.max} min={values.validation?.time?.min}
+                                    <TimePicker label='Maximum Time' name='max' value={values.validation?.time?.max} min={values.validation?.time?.min}
                                         onChange={(e) => {
                                             let validation = values.validation;
                                             validation!.time!.max = e.target.value;
@@ -176,7 +176,7 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                 </>
                 :
                 <main className={styles.form}>
-                   <h4 className={`${textStyles.description}`}>{values.label}</h4>
+                    <h4 className={`${textStyles.description}`}>{values.label}</h4>
                     <p className={`${textStyles.description}`}> {values.required ? "Mandatory" : ""} Time Input</p>
                     <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block" }} onClick={() => {
                         setIsEditing(!isEditing)

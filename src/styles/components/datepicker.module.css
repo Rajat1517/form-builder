@@ -1,0 +1,49 @@
+
+.dateInput{
+    padding: 0.8rem 0.4rem;
+    font-size: 1rem;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+    outline: none;
+    width: 100%;
+    background: none;
+    position: relative;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.dateInput:hover{
+    border-width: 2px;
+    color: black;
+}
+
+
+.dateInput:focus{
+    border-color: #1976d2;
+    color: black;
+}
+
+
+.dateLabel{
+    position: absolute;
+    top: -8px;
+    font-size: 0.7rem;
+    color: rgba(0, 0, 0, 0.6);
+    padding: 0 4px;
+    pointer-events: none;
+    transition: 0.2s ease all;
+}
+
+
+.dateInput:focus+.dateLabel{
+    color: #1976d2;
+}
+
+.dateInput:hover:not(:focus)+.dateLabel{
+    color: #000;
+}
+
+.dateInput, .dateLabel{
+    display: block;
+    box-sizing: border-box;
+}

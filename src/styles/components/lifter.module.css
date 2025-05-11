@@ -21,9 +21,20 @@
 }
 
 .heading{
-    cursor: pointer;;
+    cursor: pointer;
 }
 
+.lifter{
+    display: none;
+}
+
+.lifterDesktop{
+    display: block;
+}
+
+.draggable{
+    cursor: grab;
+}
 
 @media screen and (max-width: 715px){
     .container{
@@ -36,7 +47,7 @@
     }
     .lifter{
         overflow: hidden;
-        display: inline-block;
+        display: block;
         transition: height 500ms ease-in-out;
     }
     .components{
@@ -48,7 +59,7 @@
     }
     
     .expanded{
-        height: 12rem;
+        height: 11rem;
     }
 
     .hidden{
@@ -58,6 +69,10 @@
     .visible{
         display: block;
         margin: 0;
+    }
+
+    .lifterDesktop{
+        display: none;
     }
 }
 
