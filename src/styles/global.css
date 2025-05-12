@@ -42,6 +42,7 @@ body{
     .App{
         flex-direction: column;
         justify-content: flex-start;
+        align-items: center;
     }
 
     .right-pane{

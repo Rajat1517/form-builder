@@ -1,27 +1,40 @@
-import React, { useState } from 'react'
-import type { Layout, Option } from '../global.types';
-import styles from "../styles/components/preview.module.css";
-import {
-    TextField,
-    FormControl,
-    Select,
-    MenuItem,
-    InputLabel,
-    Button,
-    Radio,
-    RadioGroup,
-    FormControlLabel,
-    FormLabel
-} from '@mui/material';
-import DatePicker from './DatePicker';
-import TimePicker from './TimePicker';
-
+import { useEffect, useState } from "react";
+import { useParams } from "react-router"
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import type { Layout, Option } from "../global.types";
+import InputLoader from "../components/InputLoader";
+import TitleLoader from "../components/TitleLoader";
+import styles from "../styles/publishedForm.module.css";
+import { Button, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField } from "@mui/material";
+import DatePicker from "../components/DatePicker";
+import TimePicker from "../components/TimePicker";
 
-function Preview({ layout }: { layout: Layout; }) {
 
-    const [collapsed, setCollapsed] = useState(false);
+function PublishedForm() {
+    const { formId } = useParams();
+    const [layout, setLayout] = useState<Layout | null>(null);
+    const [title,setTitle]= useState("");
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const docRef = doc(db, "forms", formId!);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data= docSnap.data();
+                    setTitle(data.title);
+                    setLayout(data.layout);
+                }
+                else {
+                    throw new Error("No form found!");
+                }
+            } catch (error) {
+                console.error("Error while loading the ", error)
+            }
+        })();
+
+    }, [formId]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -35,37 +48,23 @@ function Preview({ layout }: { layout: Layout; }) {
         window.alert(JSON.stringify(res, null, 2));
     }
 
-    const handlePublish = async () => {
-        try {
-            const docRef = await addDoc(collection(db, "forms"), {
-                title: "Sample Form",
-                layout,
-                createdAt: serverTimestamp(),
-            });
-
-            console.log(docRef.id);
-        } catch (error) {
-            console.error("Error in adding new doc:", error);
-        }
-    }
 
     return (
-        <div className={`${styles.container} box-shadow`}>
-            <div className={styles.header}>
-                <h2>Preview</h2>
-                <button className={styles.toggler} onClick={() => {
-                    setCollapsed(prev => !prev)
-                }}>&#9776;</button>
-            </div>
-            <div className={`${styles.preview} ${collapsed ? styles.collapsed : styles.expanded}`}>
-                {layout.length === 0 &&
-                    <div className={`${styles.emptyPreview}`}>
-
-                        <p className={`${styles.emptyText}`}>Build to see preview</p>
-                    </div>
-                }
-                <form id="builder" onSubmit={handleSubmit}>
-                    {layout.map((input: any) => {   // need to resolve the type error here
+        <div className={styles.App}>
+            <h3 className={`${styles.title} box-shadow`}>
+                {!title && <TitleLoader />}
+                {title && <span>{title}</span>}
+            </h3>
+            <div className={`${styles.container} box-shadow`}>
+                {!layout &&
+                    <>
+                        <InputLoader />
+                        <InputLoader />
+                        <InputLoader />
+                        <InputLoader />
+                </>}
+                { layout && <form id="builder" onSubmit={handleSubmit}>
+                    {layout!.map((input: any) => {   // need to resolve the type error here
 
                         const { type, name, label, required, validation, options, id } = input;
 
@@ -168,12 +167,11 @@ function Preview({ layout }: { layout: Layout; }) {
                         }
 
                     })}
-                    {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' sx={{ margin: "0.5rem" }}>Submit</Button>}
-                    {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' onClick={handlePublish} sx={{ margin: "0.5rem" }}>Publish</Button>}
-                </form>
+                    {layout!.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' sx={{ margin: "0.5rem" }}>Submit</Button>}
+                </form>}
             </div>
         </div>
     )
 }
 
-export default Preview
+export default PublishedForm

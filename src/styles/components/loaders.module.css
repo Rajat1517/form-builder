@@ -1,0 +1,62 @@
+.container{
+    height: 10%;
+    width: 70%;
+    border-radius: 1rem;
+    background: #f9f9f9;
+    padding: 2rem;
+    animation: pulse 1.5s ease 0s infinite forwards;
+    margin: 0.5rem;
+}
+
+.entry1{
+    height: 10%;
+    width: 30%;
+    border-radius: 1rem;
+    background-color: rgb(222, 209, 209);
+    margin: 1rem 0;
+    animation: horizon-pulse 1s ease 0s infinite;
+    color: rgb(222, 209, 209);
+    font-size: x-small;
+}
+
+
+.entry2{
+    height: 10%;
+    width: 95%;
+    font-size: x-small;
+    border-radius: 1rem;
+    background-color: rgb(222, 209, 209);
+    color: rgb(222, 209, 209);
+    margin: 1rem 0;
+    animation: horizon-pulse 1s ease 0s infinite;
+}
+
+
+@keyframes pulse {
+    0%{
+        opacity: 0.5;
+        scale: 0.98;
+    }
+    50%{
+        opacity: 0.4;
+        scale: 1;
+    }
+    100%{
+        opacity: 0.5;
+        scale: 0.98;
+    }
+}
+
+@keyframes horizon-pulse {
+    0%{
+        transform: scaleX(0%);
+    }
+    100%{
+        transform: scaleX(100%);
+    }
+}
+
+
+@media screen and (max-width: 715px){
+    
+}

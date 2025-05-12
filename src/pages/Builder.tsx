@@ -33,13 +33,13 @@ const Builder = () => {
 
 
     return (
-        <>
+        <div className='App'>
             <Lifter />
             <div className='right-pane'>
                 <Dropper dispatch={dispatch} />
                 <Preview layout={layout} />
             </div>
-        </>
+        </div>
     )
 }
 
