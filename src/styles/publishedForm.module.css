@@ -7,16 +7,21 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    text-align: center;
 }
 
 
 .formItem{
+    text-align: left;
     padding: 0.5rem;
     border: 0.2rem solid #007AD3;
     margin: 1rem;
-    text-align: justify;
     border-radius: 0.5rem;
-    width: 100%;
+}
+
+.form{
+    box-sizing: border-box;
+    width: 80%;
 }
 
 .title{
@@ -28,7 +33,7 @@
     justify-content: center;
 }
 
-@media screen and (max-width: 715px){
+@media screen and (max-width: 950px){
     .container{
         width: 80%;
     }

@@ -37,8 +37,32 @@ body{
 }
 
 
+.error-container{
+    text-align: center;
+    width: 90vw;
+    height: 90vh;
+    overflow: hidden;
+    outline: invert;
+    padding: 1rem 3rem;
+    margin: 1rem auto;
+    color: red;
+    display: flex;
+    gap: 2;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    flex-wrap: wrap;
+    word-break: break-all;
+    font-size: 0.8rem;
+}
 
-@media screen and (max-width: 715px){
+.error-image{
+    width: 20%;
+    border-radius: 200px;
+}
+
+
+@media screen and (max-width: 950px){
     .App{
         flex-direction: column;
         justify-content: flex-start;
@@ -52,3 +76,5 @@ body{
         gap: 3rem;
     }
 }
+
+

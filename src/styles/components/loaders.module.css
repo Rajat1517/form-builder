@@ -50,13 +50,15 @@
 @keyframes horizon-pulse {
     0%{
         transform: scaleX(0%);
+        transform-origin: left;
     }
     100%{
         transform: scaleX(100%);
+        transform-origin: left;
     }
 }
 
 
-@media screen and (max-width: 715px){
+@media screen and (max-width: 950px){
     
 }

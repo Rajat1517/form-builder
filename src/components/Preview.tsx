@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import type { Layout, Option } from '../global.types';
+import type { Layout, ModalType, Option } from '../global.types';
 import styles from "../styles/components/preview.module.css";
 import {
     TextField,
@@ -15,6 +15,8 @@ import {
 } from '@mui/material';
 import DatePicker from './DatePicker';
 import TimePicker from './TimePicker';
+import LinkModal from './LinkModal';
+import InfoModal from './InfoModal';
 
 import { db } from "../utils/firebase";
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
@@ -22,6 +24,12 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 function Preview({ layout }: { layout: Layout; }) {
 
     const [collapsed, setCollapsed] = useState(false);
+    const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+    const [formId, setFormId] = useState('');
+    const [content, setContent] = useState('');
+    const [title, setTitle] = useState('');
+    const [modalType,setModalType]= useState<ModalType>("submitted");
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -32,20 +40,30 @@ function Preview({ layout }: { layout: Layout; }) {
             res = { ...res, [key]: value || "NA" }
         }
         form.reset();
-        window.alert(JSON.stringify(res, null, 2));
+        setModalType("submitted");
+        setTitle("Sample Submission")
+        setContent(`${JSON.stringify(res,null,"\n\n\n")}`);
+        setIsInfoModalOpen(true);
     }
 
-    const handlePublish = async () => {
+    const handlePublish = async (e: React.FormEvent) => {
+        e.preventDefault();
         try {
             const docRef = await addDoc(collection(db, "forms"), {
                 title: "Sample Form",
                 layout,
                 createdAt: serverTimestamp(),
             });
-
-            console.log(docRef.id);
-        } catch (error) {
-            console.error("Error in adding new doc:", error);
+            setFormId(docRef.id);
+            setIsLinkModalOpen(true);
+        } catch (error: unknown) {
+            console.error("Error adding document: ", error);
+            if (error instanceof Error) {
+                setModalType("error");
+                setTitle("Error while publishing")
+                setContent(`${error.message}`)
+                setIsInfoModalOpen(true);
+            }
         }
     }
 
@@ -172,6 +190,8 @@ function Preview({ layout }: { layout: Layout; }) {
                     {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' onClick={handlePublish} sx={{ margin: "0.5rem" }}>Publish</Button>}
                 </form>
             </div>
+            <LinkModal open={isLinkModalOpen} handleClose={() => setIsLinkModalOpen(false)} formId={formId} />
+            <InfoModal open={isInfoModalOpen} handleClose={() => setIsInfoModalOpen(false)} content={content} title={title} type={modalType}/>
         </div>
     )
 }
