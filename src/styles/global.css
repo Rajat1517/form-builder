@@ -39,10 +39,12 @@ body{
 
 .error-container{
     text-align: center;
-    width: 90vw;
+    box-sizing: border-box;
+    width: 80%;
     height: 90vh;
-    overflow: hidden;
-    outline: invert;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     padding: 1rem 3rem;
     margin: 1rem auto;
     color: red;
@@ -52,12 +54,15 @@ body{
     justify-content: center; 
     align-items: center;
     flex-wrap: wrap;
-    word-break: break-all;
     font-size: 0.8rem;
 }
 
+.error-container::-webkit-scrollbar{
+    display: none;
+}
+
 .error-image{
-    width: 20%;
+    width: 10rem;
     border-radius: 200px;
 }
 

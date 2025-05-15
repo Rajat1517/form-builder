@@ -21,15 +21,15 @@ import InfoModal from './InfoModal';
 import { db } from "../utils/firebase";
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
-function Preview({ layout }: { layout: Layout; }) {
+function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) {
 
     const [collapsed, setCollapsed] = useState(false);
     const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
     const [formId, setFormId] = useState('');
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState<string|object>('');
     const [title, setTitle] = useState('');
-    const [modalType,setModalType]= useState<ModalType>("submitted");
+    const [modalType, setModalType] = useState<ModalType>("submitted");
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -41,16 +41,21 @@ function Preview({ layout }: { layout: Layout; }) {
         }
         form.reset();
         setModalType("submitted");
-        setTitle("Sample Submission")
-        setContent(`${JSON.stringify(res,null,"\n\n\n")}`);
+        setTitle("Sample Submission");
+        setContent(res);
         setIsInfoModalOpen(true);
     }
 
     const handlePublish = async (e: React.FormEvent) => {
         e.preventDefault();
+
         try {
+            if (!navigator.onLine) {
+                throw new Error("Internet is not connected!");
+            }
+            if(formTitle.trim()==="") throw new Error("Form is untitled");
             const docRef = await addDoc(collection(db, "forms"), {
-                title: "Sample Form",
+                title: formTitle,
                 layout,
                 createdAt: serverTimestamp(),
             });
@@ -60,7 +65,7 @@ function Preview({ layout }: { layout: Layout; }) {
             console.error("Error adding document: ", error);
             if (error instanceof Error) {
                 setModalType("error");
-                setTitle("Error while publishing")
+                setTitle("Oops")
                 setContent(`${error.message}`)
                 setIsInfoModalOpen(true);
             }
@@ -82,6 +87,7 @@ function Preview({ layout }: { layout: Layout; }) {
                         <p className={`${styles.emptyText}`}>Build to see preview</p>
                     </div>
                 }
+                {layout.length > 0 && <TextField disabled sx={{ textAlign: "center" }} type='text' name='form-title' id="form-title" value={formTitle} variant="standard" slotProps={{ htmlInput: { minLength: 0, maxLength: 255 } }} />}
                 <form id="builder" onSubmit={handleSubmit}>
                     {layout.map((input: any) => {   // need to resolve the type error here
 
@@ -191,7 +197,7 @@ function Preview({ layout }: { layout: Layout; }) {
                 </form>
             </div>
             <LinkModal open={isLinkModalOpen} handleClose={() => setIsLinkModalOpen(false)} formId={formId} />
-            <InfoModal open={isInfoModalOpen} handleClose={() => setIsInfoModalOpen(false)} content={content} title={title} type={modalType}/>
+            <InfoModal open={isInfoModalOpen} handleClose={() => setIsInfoModalOpen(false)} content={content} title={title} type={modalType} />
         </div>
     )
 }

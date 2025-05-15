@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router"
-import { doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import type { Layout, ModalType, Option } from "../global.types";
 import InputLoader from "../components/InputLoader";
@@ -19,7 +19,7 @@ function PublishedForm() {
     const [layout, setLayout] = useState<Layout | null>(null);
     const [title, setTitle] = useState("");
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState<string|object>('');
     const [modalTitle, setModalTitle] = useState('');
     const [modalType, setModalType] = useState<ModalType>("submitted");
     const [failed, setFailed] = useState(false);
@@ -36,7 +36,7 @@ function PublishedForm() {
                     setLayout(data.layout);
                 }
                 else {
-                    throw new Error(`No form with ID: ${formId} found!`);
+                    throw new Error(`Error 404. No such form found!`);
                 }
             } catch (error: unknown) {
                 console.error("Error while loading the ", error)
@@ -50,19 +50,38 @@ function PublishedForm() {
 
     }, [formId]);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        const form = document.getElementById("builder") as HTMLFormElement;
-        const formData = new FormData(form);
-        let res = {};
-        for (const [key, value] of formData) {
-            res = { ...res, [key]: value || "NA" }
+        try {
+            if (!navigator.onLine) {
+                throw new Error("Internet is not connected!");
+            }
+            const form = document.getElementById("published-form") as HTMLFormElement;
+            const formData = new FormData(form);
+            let res = {};
+            for (const [key, value] of formData) {
+                res = { ...res, [key]: value || "NA" }
+            }
+            await addDoc(collection(db, "submissions"), {
+                formId,
+                response: res,
+                submittedAt: serverTimestamp(),
+            });
+
+            form.reset();
+            setModalType("submitted");
+            setModalTitle(`Submission Successfull`)
+            setContent(res);
+            setIsInfoModalOpen(true);
+        } catch (error: unknown) {
+            console.error("Error adding document: ", error);
+            if (error instanceof Error) {
+                setModalType("error");
+                setModalTitle("Oops")
+                setContent(`${error.message}`)
+                setIsInfoModalOpen(true);
+            }
         }
-        form.reset();
-        setModalType("submitted");
-        setModalTitle("Sample Submission")
-        setContent(`${JSON.stringify(res, null, "\n\n\n")}`);
-        setIsInfoModalOpen(true);
     }
 
 
@@ -82,7 +101,7 @@ function PublishedForm() {
                             <InputLoader />
                         </>}
                     {layout &&
-                        <form id="builder" className={styles.form} onSubmit={handleSubmit}>
+                        <form id="published-form" className={styles.form} onSubmit={handleSubmit}>
                             {layout!.map((input: any) => {   // need to resolve the type error here
 
                                 const { type, name, label, required, validation, options, id } = input;

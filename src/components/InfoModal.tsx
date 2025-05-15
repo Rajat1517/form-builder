@@ -1,13 +1,14 @@
 import { Modal } from '@mui/material';
 import styles from "../styles/components/modals.module.css";
 import { ModalType } from "../global.types";
+import { nanoid } from 'nanoid';
 
 type ErrorModalProps = {
     open: boolean;
     handleClose: () => void;
     type: ModalType;
     title: string;
-    content: string;
+    content: string|object;
 }
 
 function InfoModal({ open, handleClose, type, title, content }: ErrorModalProps) {
@@ -31,7 +32,14 @@ function InfoModal({ open, handleClose, type, title, content }: ErrorModalProps)
                     {title}
                 </h2>
                 <div className={styles.content}>
-                    <p>{content}</p>
+                    {type==="error" && <p>{content as string}</p>}
+                    {type==="submitted"&& <ol className={styles.output}>
+                        {Object.entries(content).map(([key,val])=>{
+                            return(
+                                <li key={nanoid()}>{key}: {val}</li>
+                            )
+                        })}
+                    </ol>}
                 </div>
             </div>
         </Modal>

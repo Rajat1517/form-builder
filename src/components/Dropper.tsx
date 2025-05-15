@@ -1,4 +1,4 @@
-import React, { type Dispatch, useState, type DragEvent } from 'react'
+import React, { type Dispatch, useState, type DragEvent, SetStateAction } from 'react'
 import TextBuilder from './TextBuilder';
 import SelectionBuilder from './SelectionBuilder';
 import RadioBuilder from './RadioBuilder';
@@ -7,10 +7,11 @@ import styles from "../styles/components/dropper.module.css"
 import { Action } from '../global.types';
 import { nanoid } from 'nanoid';
 import TimeBuilder from './TimeBuilder';
+import { TextField } from '@mui/material';
 
 export type BiulderState = { data: string; id: string; }
 
-function Dropper({ dispatch }: { dispatch: Dispatch<Action> }) {
+function Dropper({ dispatch, formTitle, setFormTitle }: { dispatch: Dispatch<Action>; formTitle: string; setFormTitle: Dispatch<SetStateAction<string>> }) {
     const [builders, setBuilders] = useState<BiulderState[]>([]);
 
     const [collapsed, setCollapsed] = useState(false);
@@ -77,14 +78,19 @@ function Dropper({ dispatch }: { dispatch: Dispatch<Action> }) {
                         <p className={`${styles.emptyText}`}>Drop your component</p>
                     </div>
                 }
-                {builders.map((builder, index) => {
+                {builders.length > 0 && <TextField sx={{ textAlign: "center" }} type='text' required name='form-title' id="form-title" value={formTitle} variant="standard" onChange={(e) => {
+                    setFormTitle(e.target.value)
+                }} slotProps={{ htmlInput: { minLength: 0, maxLength: 255 } }} />}
+                {
+                    builders.map((builder, index) => {
 
-                    return (<div key={builder.id} className={`${styles.formItem}  ${styles.builderCard}`}
-                    >
-                        {renderBuilder(builder, index)}
-                    </div>)
+                        return (<div key={builder.id} className={`${styles.formItem}  ${styles.builderCard}`}
+                        >
+                            {renderBuilder(builder, index)}
+                        </div>)
 
-                })}
+                    })
+                }
             </div>
         </div>
     )
