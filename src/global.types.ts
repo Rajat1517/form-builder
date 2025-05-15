@@ -1,4 +1,4 @@
-export type Validation= {
+export type Validation = {
     num?: {
         min: number;
         max: number;
@@ -10,12 +10,12 @@ export type Validation= {
         maxLength?: number;
         minLength?: number;
     };
-    date?:{
+    date?: {
         min?: Date;
         max?: Date;
     };
 
-    time?:{
+    time?: {
         min?: string;
         max?: string;
     }
@@ -35,30 +35,33 @@ export interface TextInput extends Input {
     validation?: Validation;
 }
 
-export type Layout= (TextInput|SelectionInput|RadioInput|DateInput)[];
+export type Layout = (TextInput | SelectionInput | RadioInput | DateInput)[];
 
-export type Action= {type: string; payload: TextInput|SelectionInput|RadioInput|DateInput}
+export type Action = { type: string; payload: TextInput | SelectionInput | RadioInput | DateInput }
 
-export type Option= {
+export type Option = {
     value: string;
     content: string;
     id: string;
 }
 
-export interface SelectionInput extends Input{
+export interface SelectionInput extends Input {
     multiple?: boolean;
     options: Option[];
 }
 
-export interface RadioInput extends Input{
+export interface RadioInput extends Input {
     options: Option[];
 }
 
 
-export interface DateInput extends Input{
+export interface DateInput extends Input {
     validation?: Validation;
 }
 
-export interface TimeInput extends Input{
+export interface TimeInput extends Input {
     validation?: Validation;
 }
+
+
+export type ModalType = "error" | "submitted";

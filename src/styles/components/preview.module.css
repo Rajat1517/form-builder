@@ -5,7 +5,6 @@
     box-sizing: border-box;
     text-align: center;
     background-color: #ffffff48;
-    /* background-color: #198adb23;; */
     color: #1E1E1E;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -47,7 +46,7 @@
 
 
 
-@media screen and (max-width: 715px){
+@media screen and (max-width: 950px){
     .container{
         width: 90%;
     }

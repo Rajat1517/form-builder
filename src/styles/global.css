@@ -37,11 +37,41 @@ body{
 }
 
 
+.error-container{
+    text-align: center;
+    box-sizing: border-box;
+    width: 80%;
+    height: 90vh;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 1rem 3rem;
+    margin: 1rem auto;
+    color: red;
+    display: flex;
+    gap: 2;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+}
 
-@media screen and (max-width: 715px){
+.error-container::-webkit-scrollbar{
+    display: none;
+}
+
+.error-image{
+    width: 10rem;
+    border-radius: 200px;
+}
+
+
+@media screen and (max-width: 950px){
     .App{
         flex-direction: column;
         justify-content: flex-start;
+        align-items: center;
     }
 
     .right-pane{
@@ -51,3 +81,5 @@ body{
         gap: 3rem;
     }
 }
+
+

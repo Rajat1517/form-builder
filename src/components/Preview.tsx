@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import type { Layout, Option } from '../global.types';
+import type { Layout, ModalType, Option } from '../global.types';
 import styles from "../styles/components/preview.module.css";
 import {
     TextField,
@@ -15,10 +15,21 @@ import {
 } from '@mui/material';
 import DatePicker from './DatePicker';
 import TimePicker from './TimePicker';
+import LinkModal from './LinkModal';
+import InfoModal from './InfoModal';
 
-function Preview({ layout }: { layout: Layout; }) {
+import { db } from "../utils/firebase";
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+
+function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) {
 
     const [collapsed, setCollapsed] = useState(false);
+    const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+    const [formId, setFormId] = useState('');
+    const [content, setContent] = useState<string|object>('');
+    const [title, setTitle] = useState('');
+    const [modalType, setModalType] = useState<ModalType>("submitted");
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -29,7 +40,36 @@ function Preview({ layout }: { layout: Layout; }) {
             res = { ...res, [key]: value || "NA" }
         }
         form.reset();
-        window.alert(JSON.stringify(res, null, 2));
+        setModalType("submitted");
+        setTitle("Sample Submission");
+        setContent(res);
+        setIsInfoModalOpen(true);
+    }
+
+    const handlePublish = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            if (!navigator.onLine) {
+                throw new Error("Internet is not connected!");
+            }
+            if(formTitle.trim()==="") throw new Error("Form is untitled");
+            const docRef = await addDoc(collection(db, "forms"), {
+                title: formTitle,
+                layout,
+                createdAt: serverTimestamp(),
+            });
+            setFormId(docRef.id);
+            setIsLinkModalOpen(true);
+        } catch (error: unknown) {
+            console.error("Error adding document: ", error);
+            if (error instanceof Error) {
+                setModalType("error");
+                setTitle("Oops")
+                setContent(`${error.message}`)
+                setIsInfoModalOpen(true);
+            }
+        }
     }
 
     return (
@@ -47,6 +87,7 @@ function Preview({ layout }: { layout: Layout; }) {
                         <p className={`${styles.emptyText}`}>Build to see preview</p>
                     </div>
                 }
+                {layout.length > 0 && <TextField disabled sx={{ textAlign: "center" }} type='text' name='form-title' id="form-title" value={formTitle} variant="standard" slotProps={{ htmlInput: { minLength: 0, maxLength: 255 } }} />}
                 <form id="builder" onSubmit={handleSubmit}>
                     {layout.map((input: any) => {   // need to resolve the type error here
 
@@ -137,13 +178,13 @@ function Preview({ layout }: { layout: Layout; }) {
                             case "date":
                                 return (
                                     <div key={id} className={styles.formItem}>
-                                        <DatePicker label={label} name={name} required={required} {...getValidationProps()}  />
+                                        <DatePicker label={label} name={name} required={required} {...getValidationProps()} />
                                     </div>
                                 )
                             case "time":
                                 return (
                                     <div key={id} className={styles.formItem}>
-                                        <TimePicker label={label} name={name} required={required} {...getValidationProps()}/>
+                                        <TimePicker label={label} name={name} required={required} {...getValidationProps()} />
                                     </div>
                                 )
                             default:
@@ -152,8 +193,11 @@ function Preview({ layout }: { layout: Layout; }) {
 
                     })}
                     {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' sx={{ margin: "0.5rem" }}>Submit</Button>}
+                    {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' onClick={handlePublish} sx={{ margin: "0.5rem" }}>Publish</Button>}
                 </form>
             </div>
+            <LinkModal open={isLinkModalOpen} handleClose={() => setIsLinkModalOpen(false)} formId={formId} />
+            <InfoModal open={isInfoModalOpen} handleClose={() => setIsInfoModalOpen(false)} content={content} title={title} type={modalType} />
         </div>
     )
 }

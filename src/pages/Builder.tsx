@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import { useReducer, useState } from 'react'
 import type { Layout, Action } from "../global.types"
 import Lifter from '../components/Lifter';
 import Dropper from '../components/Dropper';
@@ -30,16 +30,16 @@ const Builder = () => {
         }
     }
     const [layout, dispatch] = useReducer(reducer, []);
-
+    const [formTitle,setFormTitle]= useState("Untitled Form");
 
     return (
-        <>
+        <div className='App'>
             <Lifter />
             <div className='right-pane'>
-                <Dropper dispatch={dispatch} />
-                <Preview layout={layout} />
+                <Dropper dispatch={dispatch} formTitle={formTitle} setFormTitle={setFormTitle} />
+                <Preview layout={layout} formTitle={formTitle} />
             </div>
-        </>
+        </div>
     )
 }
 
