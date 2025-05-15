@@ -27,7 +27,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
     const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
     const [formId, setFormId] = useState('');
-    const [content, setContent] = useState<string|object>('');
+    const [content, setContent] = useState<string | object>('');
     const [title, setTitle] = useState('');
     const [modalType, setModalType] = useState<ModalType>("submitted");
 
@@ -53,7 +53,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
             if (!navigator.onLine) {
                 throw new Error("Internet is not connected!");
             }
-            if(formTitle.trim()==="") throw new Error("Form is untitled");
+            if (formTitle.trim() === "") throw new Error("Form is untitled");
             const docRef = await addDoc(collection(db, "forms"), {
                 title: formTitle,
                 layout,
