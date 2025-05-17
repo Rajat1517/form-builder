@@ -41,7 +41,6 @@ export type Action = { type: string; payload: TextInput | SelectionInput | Radio
 
 export type Option = {
     value: string;
-    content: string;
     id: string;
 }
 

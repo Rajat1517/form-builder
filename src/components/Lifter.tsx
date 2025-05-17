@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styles from "../styles/components/lifter.module.css";
-function Lifter() {
+import type { BiulderState } from "../pages/Builder";
+
+function Lifter({builders}:{builders:BiulderState[]; }) {
   const [collapsed, setCollapsed] = useState(true);
   return (
     <div className={`${styles.container}`}>
@@ -11,7 +13,7 @@ function Lifter() {
         <p>Form Builder</p>
       </div>
       <div className={`${styles.components} `}>
-        <h3 className={`${styles.visible} ${styles.heading}`} onClick={() => setCollapsed(prev => !prev)}>Components</h3>
+        <h3 className={`${styles.visible} ${styles.heading} ${builders.length===0 && collapsed? styles.hopper:""}`} onClick={() => setCollapsed(prev => !prev)}>Components</h3>
         <div className={`${styles.lifter} ${collapsed ? styles.collapsed : styles.expanded}`}>
           <p draggable className={styles.draggable} onDragStart={e => {
             e.dataTransfer.setData("text/plain", "text")

@@ -68,7 +68,7 @@
 
 .emptyText{
     color: black;
-    max-width: 40%;
+    max-width: 65%;
     margin: 5%;
     font-size: 1rem;
 }
@@ -167,8 +167,12 @@
 }
 
 .toggler{
+    font-size: 1.5rem;
     display: none;
     cursor: pointer;
+    border: none;
+    background:none;
+    transition: all 0.2s ease-in-out 0s;
 }
 
 
@@ -206,4 +210,12 @@
     .toggler{
         display: block;
     }
+
+    .emptyText{
+        max-width: 50%;
+    }
+}
+
+.clockwise{
+    transform: rotate(90deg);
 }

@@ -19,7 +19,7 @@ function PublishedForm() {
     const [layout, setLayout] = useState<Layout | null>(null);
     const [title, setTitle] = useState("");
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
-    const [content, setContent] = useState<string|object>('');
+    const [content, setContent] = useState<string | object>('');
     const [modalTitle, setModalTitle] = useState('');
     const [modalType, setModalType] = useState<ModalType>("submitted");
     const [failed, setFailed] = useState(false);
@@ -162,7 +162,7 @@ function PublishedForm() {
                                                         required={required}
                                                         label={label}
                                                     >
-                                                        {options.map((option: Option) => (<MenuItem value={option.value} key={option.id}>{option.content}</MenuItem>))}
+                                                        {options.map((option: Option) => (<MenuItem value={option.value} key={option.id}>{option.value}</MenuItem>))}
                                                     </Select>
                                                 </FormControl>
                                             </div>
@@ -181,7 +181,7 @@ function PublishedForm() {
                                                                 key={option.id}
                                                                 value={option.value}
                                                                 control={<Radio required={required} />}
-                                                                label={option.content}
+                                                                label={option.value}
                                                             />
                                                         ))}
                                                     </RadioGroup>

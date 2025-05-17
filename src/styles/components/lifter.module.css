@@ -74,5 +74,15 @@
     .lifterDesktop{
         display: none;
     }
+
+    .hopper{
+        animation: hop 1s ease 0s infinite;
+    }
 }
 
+
+@keyframes hop {
+    0%{ transform: translateY(0px);}
+    50%{ transform: translateY(3px);}
+    100%{ transform: translateY(0px);}
+}

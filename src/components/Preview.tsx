@@ -30,6 +30,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
     const [content, setContent] = useState<string | object>('');
     const [title, setTitle] = useState('');
     const [modalType, setModalType] = useState<ModalType>("submitted");
+    const [isPublishing, setIsPublishing] = useState(false);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -48,7 +49,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
 
     const handlePublish = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        setIsPublishing(true);
         try {
             if (!navigator.onLine) {
                 throw new Error("Internet is not connected!");
@@ -69,6 +70,8 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
                 setContent(`${error.message}`)
                 setIsInfoModalOpen(true);
             }
+        } finally {
+            setIsPublishing(false);
         }
     }
 
@@ -76,9 +79,9 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
         <div className={`${styles.container} box-shadow`}>
             <div className={styles.header}>
                 <h2>Preview</h2>
-                <button className={styles.toggler} onClick={() => {
+                <button className={`${styles.toggler} ${collapsed ? "" : styles.clockwise}`} onClick={() => {
                     setCollapsed(prev => !prev)
-                }}>&#9776;</button>
+                }}>&#8250;</button>
             </div>
             <div className={`${styles.preview} ${collapsed ? styles.collapsed : styles.expanded}`}>
                 {layout.length === 0 &&
@@ -149,7 +152,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
                                                 required={required}
                                                 label={label}
                                             >
-                                                {options.map((option: Option) => (<MenuItem value={option.value} key={option.id}>{option.content}</MenuItem>))}
+                                                {options.map((option: Option) => (<MenuItem value={option.value} key={option.id}>{option.value}</MenuItem>))}
                                             </Select>
                                         </FormControl>
                                     </div>
@@ -168,7 +171,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
                                                         key={option.id}
                                                         value={option.value}
                                                         control={<Radio required={required} />}
-                                                        label={option.content}
+                                                        label={option.value}
                                                     />
                                                 ))}
                                             </RadioGroup>
@@ -193,7 +196,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
 
                     })}
                     {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' sx={{ margin: "0.5rem" }}>Submit</Button>}
-                    {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' onClick={handlePublish} sx={{ margin: "0.5rem" }}>Publish</Button>}
+                    {layout.length > 0 && <Button disabled={isPublishing} size='small' type='submit' color="primary" variant='contained' onClick={handlePublish} sx={{ margin: "0.5rem" }}>{isPublishing ? <span className={styles.loading}></span> : "Publish"}</Button>}
                 </form>
             </div>
             <LinkModal open={isLinkModalOpen} handleClose={() => setIsLinkModalOpen(false)} formId={formId} />

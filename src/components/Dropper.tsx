@@ -1,4 +1,4 @@
-import React, { type Dispatch, useState, type DragEvent, SetStateAction } from 'react'
+import { type Dispatch, useState, type DragEvent, SetStateAction } from 'react'
 import TextBuilder from './TextBuilder';
 import SelectionBuilder from './SelectionBuilder';
 import RadioBuilder from './RadioBuilder';
@@ -8,18 +8,26 @@ import { Action } from '../global.types';
 import { nanoid } from 'nanoid';
 import TimeBuilder from './TimeBuilder';
 import { TextField } from '@mui/material';
+import type { BiulderState } from '../pages/Builder';
 
-export type BiulderState = { data: string; id: string; }
+type Props = {
+    dispatch: Dispatch<Action>;
+    formTitle: string;
+    setFormTitle: Dispatch<SetStateAction<string>>;
+    builders: BiulderState[];
+    setBuilders: Dispatch<SetStateAction<BiulderState[]>>;
+}
 
-function Dropper({ dispatch, formTitle, setFormTitle }: { dispatch: Dispatch<Action>; formTitle: string; setFormTitle: Dispatch<SetStateAction<string>> }) {
-    const [builders, setBuilders] = useState<BiulderState[]>([]);
+
+function Dropper({ dispatch, formTitle, setFormTitle, builders, setBuilders }: Props) {
+
 
     const [collapsed, setCollapsed] = useState(false);
 
     const handleDrop = (e: DragEvent<HTMLParagraphElement>, index: number) => {
 
         const data = e.dataTransfer.getData("text/plain");
-        setBuilders(prev => {
+        setBuilders((prev) => {
             const res = [...prev];
             res.splice(index + 1, 0, { data, id: nanoid() });
             return res;
@@ -59,11 +67,12 @@ function Dropper({ dispatch, formTitle, setFormTitle }: { dispatch: Dispatch<Act
                 handleDrop(e, 0);
             }}
         >
+
             <header className={`${styles.header}`}>
                 <h2>Builder</h2>
-                <button className={styles.toggler} onClick={() => {
+                <button className={`${styles.toggler} ${collapsed ? "" : styles.clockwise}`} onClick={() => {
                     setCollapsed(prev => !prev)
-                }}>&#9776;</button>
+                }}>&#8250;</button>
             </header>
             <div className={`${styles.catcher} ${collapsed ? styles.collapsed : styles.expanded}`}>
                 {builders.length === 0 &&
@@ -75,7 +84,7 @@ function Dropper({ dispatch, formTitle, setFormTitle }: { dispatch: Dispatch<Act
                             <path d="M16.9062 33.5312L27.8438 33.5313" stroke="#007AD3" strokeWidth="2" />
                         </svg>
 
-                        <p className={`${styles.emptyText}`}>Drop your component</p>
+                        <p className={`${styles.emptyText}`}>Drag and drop your component</p>
                     </div>
                 }
                 {builders.length > 0 && <TextField sx={{ textAlign: "center" }} type='text' required name='form-title' id="form-title" value={formTitle} variant="standard" onChange={(e) => {

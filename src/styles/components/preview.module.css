@@ -41,9 +41,33 @@
 }
 
 .toggler{
+   font-size: 1.5rem;
     display: none;
+    cursor: pointer;
+    border: none;
+    background:none;
+    transition: all 0.2s ease-in-out 0s;
 }
 
+.clockwise{
+    transform: rotate(90deg);
+}
+
+
+.loading{
+    height: 1.3rem;
+    width: 1.3rem;
+    border: 2px solid transparent;
+    border-radius: 200px;
+    border-top-color: black ;
+    animation: spin 0.5s linear 0s infinite;
+}
+
+
+@keyframes spin {
+    0%{ transform: rotate(0deg);}
+    100%{ transform: rotate(360deg);}
+}
 
 
 @media screen and (max-width: 950px){
