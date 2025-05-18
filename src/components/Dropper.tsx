@@ -70,7 +70,7 @@ function Dropper({ dispatch, formTitle, setFormTitle, builders, setBuilders }: P
 
             <header className={`${styles.header}`}>
                 <h2>Builder</h2>
-                <button className={`${styles.toggler} ${collapsed ? "" : styles.clockwise}`} onClick={() => {
+                <button className={`${styles.toggler} ${collapsed ? styles.resting : styles.clockwise}`} onClick={() => {
                     setCollapsed(prev => !prev)
                 }}>&#8250;</button>
             </header>

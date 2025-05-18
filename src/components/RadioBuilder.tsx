@@ -12,13 +12,14 @@ import ToggleOnIcon from "@mui/icons-material/ToggleOn"
 function RadioBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Action>; index: number; setBuilders: Dispatch<SetStateAction<BiulderState[]>> }) {
     const [options, setOptions] = useState<Array<Option>>([]);
     const [addOption, setAddOption] = useState(true);
-    const [option, setOption] = useState<Option | {}>({})
+    const [option, setOption] = useState<Option | {value:string;}>({value:""})
     const [commonError, setCommonError] = useState("");
     const [status, setStatus] = useState("build");
     const [id] = useState(nanoid());
     const [isEditing, setIsEditing] = useState(true);
     const [isDragOverTop, setIsDragOverTop] = useState(false);
     const [isDragOverBottom, setIsDragOverBottom] = useState(false);
+    const [isPositionerVisible, setIsPositionerVisible] = useState(false);
     const [values, setValues] = useState<RadioInput>({
         id,
         index,
@@ -33,7 +34,7 @@ function RadioBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Act
 
     const handleAddOption = () => {
         setOptions(prev => [...prev, { ...option, id: String(Math.random() * 1000) } as Option])
-        setOption({});
+        setOption({value:""});
         setAddOption(false);
     }
 
@@ -77,22 +78,30 @@ function RadioBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Act
 
 
     return (
-        <>
-            <p className={`${styles.dropZoneTop} ${isDragOverTop ? styles.dragOver : ''}`}
-                onDragOver={e => {
-                    e.preventDefault()
-                    setIsDragOverTop(true);
-                }}
+        <div onDragOver={(e) => {
+            e.preventDefault();
+            setIsPositionerVisible(true);
+        }} onDragLeave={(e) => {
+            e.preventDefault();
+            setIsPositionerVisible(false);
+        }} className={textStyles.container} >
+            <div onDragOver={e => {
+                e.preventDefault()
+                setIsDragOverTop(true);
+            }}
                 onDragLeave={(e) => {
                     e.preventDefault();
                     setIsDragOverTop(false);
+                    setIsPositionerVisible(false);
                 }}
                 onDrop={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     setIsDragOverTop(false);
+                    setIsPositionerVisible(false);
                     handleDrop(e, index);
-                }}></p>
+                }} className={`${textStyles.positionerTop} ${isPositionerVisible ? textStyles.visible : textStyles.hidden}`}></div>
+            <p className={`${styles.dropZoneTop} ${isDragOverTop ? styles.dragOver : ''}`}></p>
             <button className={`${textStyles.deleteButton} ${textStyles.iconButton}`}
                 onClick={handleDelete}
             >
@@ -168,7 +177,7 @@ function RadioBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Act
                             {addOption &&
                                 <>
                                     <TextField type='text' required name='value' id="value" label="Value" variant="standard" onChange={(e) => setOption(prev => ({ ...prev, value: e.target.value }))} slotProps={{ htmlInput: { minLength: 0, maxLength: 255 } }} />
-                                    <button disabled={Object.entries(option).length < 2} className={`${textStyles.iconButton} ${Object.entries(option).length < 2 ? styles.disabledIcon : styles.addIcon}`} type='button' onClick={handleAddOption}><svg className={styles.addIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <button disabled={option.value===""} className={`${textStyles.iconButton} ${option.value==="" ? styles.disabledIcon : styles.addIcon}`} type='button' onClick={handleAddOption}><svg className={styles.addIcon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="12" cy="12" r="9" stroke="#007AD3" strokeWidth="2" />
                                         <path d="M12 15L12 9" stroke="#007AD3" strokeWidth="2" strokeLinecap="square" />
                                         <path d="M15 12L9 12" stroke="#007AD3" strokeWidth="2" strokeLinecap="square" />
@@ -181,12 +190,11 @@ function RadioBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Act
                                 <path d="M7.5 12H16.5" stroke="#00000099" strokeWidth="2" />
                             </svg>
                             </button>}
-                            <Button size='small' type='submit' color="primary" variant='contained' sx={{
-                                display: "block", margin: "1rem 0 0 0"
-                            }} >Build</Button>
                         </div>
-
-                        <p style={{ color: "red" }}>{commonError}</p>
+                        <Button size='small' type='submit' color="primary" variant='contained' sx={{
+                            display: "block", margin: "1rem 0 0 0"
+                        }} >Build</Button>
+                        <p style={{ color: "red", display: `${commonError===""? "none": "block"}` }}>{commonError}</p>
                     </form>
                 </>
                 :
@@ -202,22 +210,24 @@ function RadioBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Act
                         setStatus("edit");
                     }} >Edit</Button>
                 </main>}
-            <p className={`${styles.dropZoneDown} ${isDragOverBottom ? styles.dragOver : ''}`}
-                onDragOver={e => {
-                    e.preventDefault()
-                    setIsDragOverBottom(true);
-                }}
+            <p className={`${styles.dropZoneDown} ${isDragOverBottom ? styles.dragOver : ''}`}></p>
+            <div onDragOver={e => {
+                e.preventDefault()
+                setIsDragOverBottom(true);
+            }}
                 onDragLeave={(e) => {
                     e.preventDefault();
                     setIsDragOverBottom(false);
+                    setIsPositionerVisible(false);
                 }}
                 onDrop={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     setIsDragOverBottom(false);
+                    setIsPositionerVisible(false);
                     handleDrop(e, index + 1);
-                }}></p>
-        </>
+                }} className={`${textStyles.positionerBottom} ${isPositionerVisible ? textStyles.visible : textStyles.hidden}`}></div>
+        </div>
     )
 }
 

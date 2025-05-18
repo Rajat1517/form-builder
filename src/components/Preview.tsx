@@ -79,7 +79,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
         <div className={`${styles.container} box-shadow`}>
             <div className={styles.header}>
                 <h2>Preview</h2>
-                <button className={`${styles.toggler} ${collapsed ? "" : styles.clockwise}`} onClick={() => {
+                <button className={`${styles.toggler} ${collapsed ? styles.resting : styles.clockwise}`} onClick={() => {
                     setCollapsed(prev => !prev)
                 }}>&#8250;</button>
             </div>
@@ -115,10 +115,10 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
 
                             if (validation?.date) {
                                 const { min, max } = validation.date;
-                                if (min) {
+                                if (min && min !==null) {
                                     validationProps = { ...validationProps, min: min.toISOString().split("T")[0] };
                                 }
-                                if (max) {
+                                if (max && max!==null) {
                                     validationProps = { ...validationProps, max: max.toISOString().split("T")[0] };
                                 }
                             }

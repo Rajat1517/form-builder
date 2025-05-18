@@ -28,3 +28,34 @@
     text-align: left;
     margin: 0.5rem 0;
 }
+
+.container{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.positionerTop{
+    position: absolute;
+    z-index: 1;
+    height: 50%;
+    width: 100%;
+    background-color: transparent;
+}
+
+.positionerBottom{
+    position: absolute;
+    z-index: 1;
+    height: 50%;
+    width: 100%;
+    background-color: transparent;
+    bottom: 0;
+}
+
+.visible{
+    display: block;
+}
+
+.hidden{
+    display: none;
+}

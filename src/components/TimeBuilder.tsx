@@ -18,6 +18,7 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
     const [isEditing, setIsEditing] = useState(true);
     const [isDragOverTop, setIsDragOverTop] = useState(false);
     const [isDragOverBottom, setIsDragOverBottom] = useState(false);
+    const [isPositionerVisible, setIsPositionerVisible] = useState(false);
     const [values, setValues] = useState<TimeInput>({
         id,
         index,
@@ -61,22 +62,30 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
 
 
     return (
-        <>
-            <p className={`${styles.dropZoneTop} ${isDragOverTop ? styles.dragOver : ''}`}
-                onDragOver={e => {
-                    e.preventDefault()
-                    setIsDragOverTop(true);
-                }}
+        <div onDragOver={(e) => {
+            e.preventDefault();
+            setIsPositionerVisible(true);
+        }} onDragLeave={(e) => {
+            e.preventDefault();
+            setIsPositionerVisible(false);
+        }} className={textStyles.container}  >
+            <div onDragOver={e => {
+                e.preventDefault()
+                setIsDragOverTop(true);
+            }}
                 onDragLeave={(e) => {
                     e.preventDefault();
                     setIsDragOverTop(false);
+                    setIsPositionerVisible(false);
                 }}
                 onDrop={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     setIsDragOverTop(false);
+                    setIsPositionerVisible(false);
                     handleDrop(e, index);
-                }}></p>
+                }} className={`${textStyles.positionerTop} ${isPositionerVisible ? textStyles.visible : textStyles.hidden}`}></div>
+            <p className={`${styles.dropZoneTop} ${isDragOverTop ? styles.dragOver : ''}`}></p>
             <button className={`${textStyles.deleteButton} ${textStyles.iconButton}`}
                 onClick={handleDelete}
             >
@@ -183,22 +192,24 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                         setStatus("edit");
                     }} >Edit</Button>
                 </main>}
-            <p className={`${styles.dropZoneDown} ${isDragOverBottom ? styles.dragOver : ''}`}
-                onDragOver={e => {
-                    e.preventDefault()
-                    setIsDragOverBottom(true);
-                }}
+            <p className={`${styles.dropZoneDown} ${isDragOverBottom ? styles.dragOver : ''}`}></p>
+            <div onDragOver={e => {
+                e.preventDefault()
+                setIsDragOverBottom(true);
+            }}
                 onDragLeave={(e) => {
                     e.preventDefault();
                     setIsDragOverBottom(false);
+                    setIsPositionerVisible(false);
                 }}
                 onDrop={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     setIsDragOverBottom(false);
+                    setIsPositionerVisible(false);
                     handleDrop(e, index + 1);
-                }}></p>
-        </>
+                }} className={`${textStyles.positionerBottom} ${isPositionerVisible ? textStyles.visible : textStyles.hidden}`}></div>
+        </div>
     )
 }
 

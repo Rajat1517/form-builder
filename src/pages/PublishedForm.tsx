@@ -125,11 +125,11 @@ function PublishedForm() {
 
                                     if (validation?.date) {
                                         const { min, max } = validation.date;
-                                        if (min) {
-                                            validationProps = { ...validationProps, min: min.toISOString().split("T")[0] };
+                                        if (min && min !==null) {
+                                            validationProps = { ...validationProps, min: min.toDate().toISOString().split("T")[0] };
                                         }
-                                        if (max) {
-                                            validationProps = { ...validationProps, max: max.toISOString().split("T")[0] };
+                                        if (max && max!==null) {
+                                            validationProps = { ...validationProps, max: max.toDate().toISOString().split("T")[0] };
                                         }
                                     }
 

@@ -18,6 +18,7 @@ function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
     const [isEditing, setIsEditing] = useState(true);
     const [isDragOverTop, setIsDragOverTop] = useState(false);
     const [isDragOverBottom, setIsDragOverBottom] = useState(false);
+    const [isPositionerVisible, setIsPositionerVisible] = useState(false);
     const [values, setValues] = useState<DateInput>({
         id,
         index,
@@ -28,6 +29,8 @@ function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
         type: "date",
         validation: {
             date: {
+                    min: null,
+                    max: null,
             }
         }
     })
@@ -61,22 +64,30 @@ function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
 
 
     return (
-        <>
-            <p className={`${styles.dropZoneTop} ${isDragOverTop ? styles.dragOver : ''}`}
-                onDragOver={e => {
-                    e.preventDefault()
-                    setIsDragOverTop(true);
-                }}
+        <div onDragOver={(e) => {
+            e.preventDefault();
+            setIsPositionerVisible(true);
+        }} onDragLeave={(e) => {
+            e.preventDefault();
+            setIsPositionerVisible(false);
+        }} className={textStyles.container} >
+            <div onDragOver={e => {
+                e.preventDefault()
+                setIsDragOverTop(true);
+            }}
                 onDragLeave={(e) => {
                     e.preventDefault();
                     setIsDragOverTop(false);
+                    setIsPositionerVisible(false);
                 }}
                 onDrop={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     setIsDragOverTop(false);
+                    setIsPositionerVisible(false);
                     handleDrop(e, index);
-                }}></p>
+                }} className={`${textStyles.positionerTop} ${isPositionerVisible ? textStyles.visible : textStyles.hidden}`}></div>
+            <p className={`${styles.dropZoneTop} ${isDragOverTop ? styles.dragOver : ''}`}></p>
             <button className={`${textStyles.deleteButton} ${textStyles.iconButton}`}
                 onClick={handleDelete}
             >
@@ -153,25 +164,25 @@ function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                         />
                         {hasValidations &&
                             <>
-                                <p>
+                                <div>
                                     <DatePicker label='Minimum Date' name='min' value={(values.validation?.date?.min)?.toISOString().split("T")[0]!}
                                         onChange={(e: ChangeEvent<HTMLInputElement>) => setValues(prev => {
                                             let validation = prev.validation;
                                             validation!.date!.min = new Date(e.target.value);
                                             return ({ ...prev, validation });
                                         })} />
-                                </p>
-                                <p>
+                                </div>
+                                <div>
                                     <DatePicker label='Maximum Date' name='max' min={(values.validation?.date?.min)?.toISOString().split("T")[0]} value={(values.validation?.date?.max)?.toISOString().split("T")[0]!}
                                         onChange={(e: ChangeEvent<HTMLInputElement>) => setValues(prev => {
                                             let validation = prev.validation;
                                             validation!.date!.max = new Date(e.target.value);
                                             return ({ ...prev, validation });
                                         })} />
-                                </p>
+                                </div>
                             </>
                         }
-                        <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block" }} >Build</Button>
+                        <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block", margin: "1rem 0 0 0" }} >Build</Button>
                     </form>
                 </>
                 :
@@ -183,22 +194,24 @@ function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                         setStatus("edit");
                     }} >Edit</Button>
                 </main>}
-            <p className={`${styles.dropZoneDown} ${isDragOverBottom ? styles.dragOver : ''}`}
-                onDragOver={e => {
-                    e.preventDefault()
-                    setIsDragOverBottom(true);
-                }}
+            <p className={`${styles.dropZoneDown} ${isDragOverBottom ? styles.dragOver : ''}`}></p>
+            <div onDragOver={e => {
+                e.preventDefault()
+                setIsDragOverBottom(true);
+            }}
                 onDragLeave={(e) => {
                     e.preventDefault();
                     setIsDragOverBottom(false);
+                    setIsPositionerVisible(false);
                 }}
                 onDrop={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     setIsDragOverBottom(false);
+                    setIsPositionerVisible(false);
                     handleDrop(e, index + 1);
-                }}></p>
-        </>
+                }} className={`${textStyles.positionerBottom} ${isPositionerVisible ? textStyles.visible : textStyles.hidden}`}></div>
+        </div>
     )
 }
 

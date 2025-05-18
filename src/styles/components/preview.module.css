@@ -46,13 +46,16 @@
     cursor: pointer;
     border: none;
     background:none;
-    transition: all 0.2s ease-in-out 0s;
+    transition: all 0.3s ease 0s;
 }
 
 .clockwise{
-    transform: rotate(90deg);
+    transform: rotate(-90deg);
 }
 
+.resting{
+    transform: rotate(90deg);    
+}
 
 .loading{
     height: 1.3rem;

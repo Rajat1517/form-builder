@@ -76,13 +76,13 @@
     }
 
     .hopper{
-        animation: hop 1s ease 0s infinite;
+        animation: hop 0.8s ease 0s infinite;
     }
 }
 
 
 @keyframes hop {
     0%{ transform: translateY(0px);}
-    50%{ transform: translateY(3px);}
+    50%{ transform: translateY(4px);}
     100%{ transform: translateY(0px);}
 }

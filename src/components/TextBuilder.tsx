@@ -32,7 +32,7 @@ function TextBuilder({ dispatch, index, setBuilders }: { dispatch: React.Dispatc
   });
   const [isDragOverTop, setIsDragOverTop] = useState(false);
   const [isDragOverBottom, setIsDragOverBottom] = useState(false);
-
+  const [isPositionerVisible, setIsPositionerVisible] = useState(false);
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const res = values;
@@ -60,22 +60,30 @@ function TextBuilder({ dispatch, index, setBuilders }: { dispatch: React.Dispatc
   }
 
   return (
-    <>
-      <p className={`${styles.dropZoneTop} ${isDragOverTop ? styles.dragOver : ''}`}
-        onDragOver={e => {
-          e.preventDefault()
-          setIsDragOverTop(true);
-        }}
+    <div onDragOver={(e) => {
+      e.preventDefault();
+      setIsPositionerVisible(true);
+    }} onDragLeave={(e)=>{
+      e.preventDefault();
+      setIsPositionerVisible(false);
+    }} className={textStyles.container} >
+      <div onDragOver={e => {
+        e.preventDefault()
+        setIsDragOverTop(true);
+      }}
         onDragLeave={(e) => {
           e.preventDefault();
           setIsDragOverTop(false);
+          setIsPositionerVisible(false);
         }}
         onDrop={e => {
           e.preventDefault();
           e.stopPropagation();
           setIsDragOverTop(false);
+          setIsPositionerVisible(false);
           handleDrop(e, index);
-        }}></p>
+        }} className={`${textStyles.positionerTop} ${isPositionerVisible ? textStyles.visible : textStyles.hidden}`}></div>
+      <p className={`${styles.dropZoneTop} ${isDragOverTop ? styles.dragOver : ''}`}></p>
       <button className={`${textStyles.deleteButton} ${textStyles.iconButton}`}
         onClick={handleDelete}
       >
@@ -217,28 +225,30 @@ function TextBuilder({ dispatch, index, setBuilders }: { dispatch: React.Dispatc
         >
           <h4 className={`${textStyles.description}`}>{values.label}</h4>
           <p className={`${textStyles.description}`}> {values.required && `Mandatory`} Text input.</p>
-          <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block"}} onClick={() => {
+          <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block" }} onClick={() => {
             setIsEditing(!isEditing)
             setStatus("edit");
           }} >Edit</Button>
         </main>
       }
-      <p className={`${styles.dropZoneDown} ${isDragOverBottom ? styles.dragOver : ''}`}
-        onDragOver={e => {
-          e.preventDefault()
-          setIsDragOverBottom(true);
-        }}
+      <p className={`${styles.dropZoneDown} ${isDragOverBottom ? styles.dragOver : ''}`}></p>
+      <div onDragOver={e => {
+        e.preventDefault()
+        setIsDragOverBottom(true);
+      }}
         onDragLeave={(e) => {
           e.preventDefault();
           setIsDragOverBottom(false);
+          setIsPositionerVisible(false);
         }}
         onDrop={e => {
           e.preventDefault();
           e.stopPropagation();
           setIsDragOverBottom(false);
+          setIsPositionerVisible(false);
           handleDrop(e, index + 1);
-        }}></p>
-    </>
+        }} className={`${textStyles.positionerBottom} ${isPositionerVisible ? textStyles.visible : textStyles.hidden}`}></div>
+    </div>
   )
 }
 
