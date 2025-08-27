@@ -1,10 +1,10 @@
 import React, { useState, type FormEvent, type DragEvent } from 'react'
 import type { Dispatch, SetStateAction } from 'react';
-import type { Action, TextInput } from "../global.types";
+import type { Action, TextInput } from "../../global.types";
 import { nanoid } from 'nanoid';
-import styles from "../styles/components/dropper.module.css"
-import type { BiulderState } from '../pages/Builder';
-import textStyles from "../styles/components/builders.module.css";
+import styles from "../../styles/components/dropper.module.css"
+import type { BiulderState } from '../../pages/Builder';
+import textStyles from "../../styles/components/builders.module.css";
 import { Button, TextField, Checkbox, FormControlLabel } from '@mui/material';
 import ToggleOffIcon from "@mui/icons-material/ToggleOff"
 import ToggleOnIcon from "@mui/icons-material/ToggleOn"
@@ -63,7 +63,7 @@ function TextBuilder({ dispatch, index, setBuilders }: { dispatch: React.Dispatc
     <div onDragOver={(e) => {
       e.preventDefault();
       setIsPositionerVisible(true);
-    }} onDragLeave={(e)=>{
+    }} onDragLeave={(e) => {
       e.preventDefault();
       setIsPositionerVisible(false);
     }} className={textStyles.container} >

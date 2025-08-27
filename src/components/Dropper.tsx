@@ -1,12 +1,12 @@
 import { type Dispatch, useState, type DragEvent, SetStateAction } from 'react'
-import TextBuilder from './TextBuilder';
-import SelectionBuilder from './SelectionBuilder';
-import RadioBuilder from './RadioBuilder';
-import DateBuilder from './DateBuilder';
+import TextBuilder from './builders/TextBuilder';
+import SelectionBuilder from './builders/SelectionBuilder';
+import RadioBuilder from './builders/RadioBuilder';
+import DateBuilder from './builders/DateBuilder';
 import styles from "../styles/components/dropper.module.css"
 import { Action } from '../global.types';
 import { nanoid } from 'nanoid';
-import TimeBuilder from './TimeBuilder';
+import TimeBuilder from './builders/TimeBuilder';
 import { TextField } from '@mui/material';
 import type { BiulderState } from '../pages/Builder';
 

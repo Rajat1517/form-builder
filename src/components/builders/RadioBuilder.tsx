@@ -1,15 +1,15 @@
 import { type Dispatch, type FormEvent, useState, type DragEvent, type SetStateAction } from 'react'
-import { type SelectionInput, type Action, type Option } from '../global.types';
+import { type RadioInput, type Action, type Option } from '../../global.types';
 import { nanoid } from 'nanoid';
-import type { BiulderState } from '../pages/Builder';
+import type { BiulderState } from '../../pages/Builder';
 import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
-import styles from "../styles/components/dropper.module.css"
-import textStyles from "../styles/components/builders.module.css";
+import styles from "../../styles/components/dropper.module.css"
+import textStyles from "../../styles/components/builders.module.css";
 
 import ToggleOffIcon from "@mui/icons-material/ToggleOff"
 import ToggleOnIcon from "@mui/icons-material/ToggleOn"
 
-function SelectionBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Action>; index: number; setBuilders: Dispatch<SetStateAction<BiulderState[]>> }) {
+function RadioBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Action>; index: number; setBuilders: Dispatch<SetStateAction<BiulderState[]>> }) {
     const [options, setOptions] = useState<Array<Option>>([]);
     const [addOption, setAddOption] = useState(true);
     const [option, setOption] = useState<Option | {value:string;}>({value:""})
@@ -20,7 +20,7 @@ function SelectionBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch
     const [isDragOverTop, setIsDragOverTop] = useState(false);
     const [isDragOverBottom, setIsDragOverBottom] = useState(false);
     const [isPositionerVisible, setIsPositionerVisible] = useState(false);
-    const [values, setValues] = useState<SelectionInput>({
+    const [values, setValues] = useState<RadioInput>({
         id,
         index,
         label: "",
@@ -28,7 +28,7 @@ function SelectionBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch
         options: [],
         required: false,
         status,
-        type: "select",
+        type: "radio",
     })
 
 
@@ -51,7 +51,7 @@ function SelectionBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch
         res.options = options;
         res.index = index;
 
-        dispatch({ type: "select", payload: res });
+        dispatch({ type: "radio", payload: res });
         setIsEditing(false);
     }
 
@@ -81,11 +81,10 @@ function SelectionBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch
         <div onDragOver={(e) => {
             e.preventDefault();
             setIsPositionerVisible(true);
-        }}
-            onDragLeave={(e) => {
-                e.preventDefault();
-                setIsPositionerVisible(false);
-            }} className={textStyles.container} >
+        }} onDragLeave={(e) => {
+            e.preventDefault();
+            setIsPositionerVisible(false);
+        }} className={textStyles.container} >
             <div onDragOver={e => {
                 e.preventDefault()
                 setIsDragOverTop(true);
@@ -131,14 +130,14 @@ function SelectionBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch
                             handleDrop(e, index + 1);
                         }}
                     >
-                        <TextField type='text' fullWidth required name='label' id="label" value={values.label} label="Entry Label" variant="standard" onChange={e => setValues(prev => ({ ...prev, label: e.target.value, name: e.target.value }))} slotProps={{ htmlInput: { minLength: 0, maxLength: 255 } }} helperText="Label for your selection entry" />
+                        <TextField type='text' fullWidth required name='label' id="label" value={values.label} label="Entry Label" variant="standard" onChange={e => setValues(prev => ({ ...prev, label: e.target.value, name: e.target.value }))} slotProps={{ htmlInput: { minLength: 0, maxLength: 255 } }} helperText="Label for your radio entry" />
 
 
                         <FormControlLabel
                             sx={{
                                 margin: "0",
                                 padding: "0",
-                                height: "2rem",
+                                height: "2rem"
                             }}
                             control={
                                 <Checkbox
@@ -193,17 +192,17 @@ function SelectionBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch
                             </button>}
                         </div>
                         <Button size='small' type='submit' color="primary" variant='contained' sx={{
-                                display: "block", margin: "1rem 0 0 0"
-                            }} >Build</Button>
-                        <p style={{ color: "red", display: `${commonError===""? "none":"block"}` }}>{commonError}</p>
+                            display: "block", margin: "1rem 0 0 0"
+                        }} >Build</Button>
+                        <p style={{ color: "red", display: `${commonError===""? "none": "block"}` }}>{commonError}</p>
                     </form>
                 </>
                 :
                 <main className={styles.form}>
                     <h4 className={`${textStyles.description}`}>{values.label}</h4>
-                    <p className={`${textStyles.description}`}> {values.required ? "Mandatory" : ""} Selection Input as {options.map((option, index, arr) => {
+                    <p className={`${textStyles.description}`}> {values.required ? "Mandatory" : ""} Radio Input as {options.map((option, index, arr) => {
                         return (
-                            <span>{index === arr.length - 1 && arr.length > 1 ? "and " : ""} {option.value}{index < arr.length - 2 ? ", " : " "}</span>
+                            <span>{index === arr.length - 1 && arr.length > 1 ? "or " : ""} {option.value}{index < arr.length - 2 ? ", " : " "}</span>
                         )
                     })}</p>
                     <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block" }} onClick={() => {
@@ -232,4 +231,4 @@ function SelectionBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch
     )
 }
 
-export default SelectionBuilder
+export default RadioBuilder

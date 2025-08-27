@@ -1,15 +1,15 @@
-import { type Dispatch, type FormEvent, useState, type DragEvent, type SetStateAction } from 'react'
-import type { Action, TimeInput } from '../global.types';
+import { type Dispatch, type FormEvent, useState, type DragEvent, type SetStateAction, ChangeEvent } from 'react'
+import type { Action, DateInput } from '../../global.types';
 import { nanoid } from 'nanoid';
-import { type BiulderState } from '../pages/Builder';
+import { type BiulderState } from '../../pages/Builder';
 import { Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
-import styles from "../styles/components/dropper.module.css"
-import textStyles from "../styles/components/builders.module.css";
+import styles from "../../styles/components/dropper.module.css"
+import textStyles from "../../styles/components/builders.module.css";
 import ToggleOffIcon from "@mui/icons-material/ToggleOff"
 import ToggleOnIcon from "@mui/icons-material/ToggleOn"
-import TimePicker from './TimePicker';
+import DatePicker from '../DatePicker';
 
-function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Action>; index: number; setBuilders: Dispatch<SetStateAction<BiulderState[]>> }) {
+function DateBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Action>; index: number; setBuilders: Dispatch<SetStateAction<BiulderState[]>> }) {
 
 
     const [status, setStatus] = useState("build");
@@ -19,16 +19,18 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
     const [isDragOverTop, setIsDragOverTop] = useState(false);
     const [isDragOverBottom, setIsDragOverBottom] = useState(false);
     const [isPositionerVisible, setIsPositionerVisible] = useState(false);
-    const [values, setValues] = useState<TimeInput>({
+    const [values, setValues] = useState<DateInput>({
         id,
         index,
         label: "",
         name: "",
         required: false,
         status,
-        type: "time",
+        type: "date",
         validation: {
-            time: {
+            date: {
+                min: null,
+                max: null,
             }
         }
     })
@@ -39,7 +41,7 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
         const res = values;
         res.status = status;
         res.index = index;
-        dispatch({ type: "time", payload: res });
+        dispatch({ type: "date", payload: res });
         setIsEditing(false);
     }
 
@@ -68,7 +70,7 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
         }} onDragLeave={(e) => {
             e.preventDefault();
             setIsPositionerVisible(false);
-        }} className={textStyles.container}  >
+        }} className={textStyles.container} >
             <div onDragOver={e => {
                 e.preventDefault()
                 setIsDragOverTop(true);
@@ -114,7 +116,7 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                             handleDrop(e, index + 1);
                         }}
                     >
-                        <TextField type='text' fullWidth required name='label' id="label" value={values.label} label="Entry Label" variant="standard" onChange={e => setValues(prev => ({ ...prev, label: e.target.value, name: e.target.value }))} slotProps={{ htmlInput: { minLength: 0, maxLength: 255 } }} helperText="Label for your time entry" />
+                        <TextField type='text' fullWidth required name='label' id="label" value={values.label} label="Entry Label" variant="standard" onChange={e => setValues(prev => ({ ...prev, label: e.target.value, name: e.target.value }))} slotProps={{ htmlInput: { minLength: 0, maxLength: 255 } }} helperText="Label for your date entry" />
 
 
                         <FormControlLabel
@@ -147,8 +149,8 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                                     onChange={() => {
                                         if (hasValidations) {
                                             let validation = values.validation;
-                                            delete validation!.time!.min;
-                                            delete validation!.time!.max;
+                                            delete validation!.date!.min;
+                                            delete validation!.date!.max;
                                             setValues(prev => ({ ...prev, validation }));
                                         }
                                         setHasValidations(prev => !prev)
@@ -162,31 +164,31 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
                         />
                         {hasValidations &&
                             <>
-                                <p>
-                                    <TimePicker label='Minimum Time' name='min' value={values.validation?.time?.min}
-                                        onChange={(e) => {
-                                            let validation = values.validation;
-                                            validation!.time!.min = e.target.value;
-                                            setValues(prev => ({ ...prev, validation }));
-                                        }} />
-                                </p>
-                                <p>
-                                    <TimePicker label='Maximum Time' name='max' value={values.validation?.time?.max} min={values.validation?.time?.min}
-                                        onChange={(e) => {
-                                            let validation = values.validation;
-                                            validation!.time!.max = e.target.value;
-                                            setValues(prev => ({ ...prev, validation }));
-                                        }} />
-                                </p>
+                                <div>
+                                    <DatePicker label='Minimum Date' name='min' value={(values.validation?.date?.min)?.toISOString().split("T")[0]!}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setValues(prev => {
+                                            let validation = prev.validation;
+                                            validation!.date!.min = new Date(e.target.value);
+                                            return ({ ...prev, validation });
+                                        })} />
+                                </div>
+                                <div>
+                                    <DatePicker label='Maximum Date' name='max' min={(values.validation?.date?.min)?.toISOString().split("T")[0]} value={(values.validation?.date?.max)?.toISOString().split("T")[0]!}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setValues(prev => {
+                                            let validation = prev.validation;
+                                            validation!.date!.max = new Date(e.target.value);
+                                            return ({ ...prev, validation });
+                                        })} />
+                                </div>
                             </>
                         }
-                        <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block" }} >Build</Button>
+                        <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block", margin: "1rem 0 0 0" }} >Build</Button>
                     </form>
                 </>
                 :
                 <main className={styles.form}>
                     <h4 className={`${textStyles.description}`}>{values.label}</h4>
-                    <p className={`${textStyles.description}`}> {values.required ? "Mandatory" : ""} Time Input</p>
+                    <p className={`${textStyles.description}`}> {values.required ? "Mandatory" : ""} Date Input</p>
                     <Button size='small' type='submit' color="primary" variant='contained' sx={{ display: "block" }} onClick={() => {
                         setIsEditing(!isEditing)
                         setStatus("edit");
@@ -213,4 +215,4 @@ function TimeBuilder({ dispatch, index, setBuilders }: { dispatch: Dispatch<Acti
     )
 }
 
-export default TimeBuilder
+export default DateBuilder
