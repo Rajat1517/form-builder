@@ -20,8 +20,9 @@ import InfoModal from './InfoModal';
 
 import { db } from "../utils/firebase";
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import type { User } from 'firebase/auth';
 
-function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) {
+function Preview({ layout, formTitle, user }: { layout: Layout; formTitle: string; user: User | null }) {
 
     const [collapsed, setCollapsed] = useState(false);
     const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
@@ -115,10 +116,10 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
 
                             if (validation?.date) {
                                 const { min, max } = validation.date;
-                                if (min && min !==null) {
+                                if (min && min !== null) {
                                     validationProps = { ...validationProps, min: min.toISOString().split("T")[0] };
                                 }
-                                if (max && max!==null) {
+                                if (max && max !== null) {
                                     validationProps = { ...validationProps, max: max.toISOString().split("T")[0] };
                                 }
                             }
@@ -196,7 +197,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
 
                     })}
                     {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' sx={{ margin: "0.5rem" }}>Submit</Button>}
-                    {layout.length > 0 && <Button disabled={isPublishing} size='small' type='submit' color="primary" variant='contained' onClick={handlePublish} sx={{ margin: "0.5rem" }}>{isPublishing ? <span className={styles.loading}></span> : "Publish"}</Button>}
+                    {layout.length > 0 && <Button disabled={isPublishing || !user} title={!user ? "Sign In to publish" : "njll"} size='small' type='submit' color="primary" variant='contained' onClick={handlePublish} sx={{ margin: "0.5rem" }}>{isPublishing ? <span className={styles.loading}></span> : "Publish"}</Button>}
                 </form>
             </div>
             <LinkModal open={isLinkModalOpen} handleClose={() => setIsLinkModalOpen(false)} formId={formId} />

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import styles from "../styles/components/lifter.module.css";
 import type { BiulderState } from "../pages/Builder";
-
-function Lifter({builders}:{builders:BiulderState[]; }) {
+import useAuth from "../hooks/useAuth";
+function Lifter({ builders }: { builders: BiulderState[]; }) {
   const [collapsed, setCollapsed] = useState(true);
+  const { handleLogin } = useAuth();
   return (
     <div className={`${styles.container}`}>
       <div className={styles.logo}>
@@ -13,7 +14,7 @@ function Lifter({builders}:{builders:BiulderState[]; }) {
         <p>Form Builder</p>
       </div>
       <div className={`${styles.components} `}>
-        <h3 className={`${styles.visible} ${styles.heading} ${builders.length===0 && collapsed? styles.hopper:""}`} onClick={() => setCollapsed(prev => !prev)}>Components</h3>
+        <h3 className={`${styles.visible} ${styles.heading} ${builders.length === 0 && collapsed ? styles.hopper : ""}`} onClick={() => setCollapsed(prev => !prev)}>Components</h3>
         <div className={`${styles.lifter} ${collapsed ? styles.collapsed : styles.expanded}`}>
           <p draggable className={styles.draggable} onDragStart={e => {
             e.dataTransfer.setData("text/plain", "text")
@@ -49,6 +50,7 @@ function Lifter({builders}:{builders:BiulderState[]; }) {
           }}>Time Input</p>
         </div>
       </div>
+      <button onClick={handleLogin}>Authentication</button>
     </div>
   )
 }
