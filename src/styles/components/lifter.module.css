@@ -24,6 +24,22 @@
     cursor: pointer;
 }
 
+.googleLogo{
+    border-radius: 5rem;
+    cursor: pointer;
+
+    &:hover{
+        opacity: 0.8;
+    }
+
+    &:focus{
+        box-shadow: 1px 1px 1px white ;
+    }
+    &:active{
+        box-shadow: 1px 1px 1px white ;
+    }
+}
+
 .lifter{
     display: none;
 }

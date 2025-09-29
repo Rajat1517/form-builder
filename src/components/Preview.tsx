@@ -18,7 +18,7 @@ import TimePicker from './TimePicker';
 import LinkModal from './LinkModal';
 import InfoModal from './InfoModal';
 
-import { db } from "../utils/firebase";
+import { db } from "../styles/utils/firebase";
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 

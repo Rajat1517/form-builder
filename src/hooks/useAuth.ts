@@ -1,17 +1,17 @@
 import { useState, useEffect, useCallback } from "react";
-import { auth, provider } from "../utils/firebase";
+import { auth, provider } from "../styles/utils/firebase";
 import { onAuthStateChanged, signInWithPopup, signOut, type User } from "firebase/auth";
 
 export default function useAuth() {
   const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticating, setIsAuthenticating]= useState(true);
-  
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
+
   useEffect(() => {
-      const unSubscribe= onAuthStateChanged(auth, (user)=>{
-          if(user) setUser(user);
-          setIsAuthenticating(false);
-      })
-      return ()=> unSubscribe();
+    const unSubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) setUser(user);
+      setIsAuthenticating(false);
+    })
+    return () => unSubscribe();
   }, [])
 
   const handleLogin = useCallback(async () => {
@@ -23,13 +23,12 @@ export default function useAuth() {
     } catch (err) {
       console.error(err);
     }
-  },[]);
+  }, []);
 
   const handleSignOut = useCallback(async () => {
     await signOut(auth);
     setUser(null);
-    console.log("logged out");
-  },[]);
+  }, []);
 
   return { user, handleLogin, handleSignOut, isAuthenticating };
 }
