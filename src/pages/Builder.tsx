@@ -38,10 +38,10 @@ const Builder = () => {
     const { isAuthenticating, user, handleLogin, handleSignOut } = useAuth();
     return (
         <div className='App'>
-            <Lifter builders={builders} user={user} handleSignOut={handleSignOut} handleLogin={handleLogin} />
+            <Lifter builders={builders} isAuthenticating={isAuthenticating} user={user} handleSignOut={handleSignOut} handleLogin={handleLogin} />
             <div className='right-pane'>
                 <Dropper dispatch={dispatch} formTitle={formTitle} setFormTitle={setFormTitle} builders={builders} setBuilders={setBuilders} />
-                <Preview layout={layout} formTitle={formTitle} user={user}  />
+                <Preview layout={layout} formTitle={formTitle} user={user} />
             </div>
         </div>
     )
