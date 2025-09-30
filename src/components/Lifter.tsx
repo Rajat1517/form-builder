@@ -49,6 +49,7 @@ function Lifter({ builders, user, handleLogin, handleSignOut, isAuthenticating }
           <p draggable className={styles.draggable} onDragStart={(e) => {
             e.dataTransfer.setData("text/plain", "time");
           }}>Time Input</p>
+          <hr/>
         </div>
       </div>
       <div>

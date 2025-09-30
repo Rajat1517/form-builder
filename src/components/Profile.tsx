@@ -2,16 +2,18 @@ import React, { MouseEventHandler, useState } from "react";
 import styles from "../styles/components/lifter.module.css";
 import type { User } from "firebase/auth";
 import { Link } from "react-router";
+import defaultImage from "../assets/dummy-profile.png";
 
 function Profile({ user, handleSignOut }: { user: User; handleSignOut: MouseEventHandler<HTMLButtonElement> }) {
-  const [isModalVisible,setIsModalVisible]= useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   console.log(user.photoURL);
   return (
     <div>
 
       <div className={styles.profileDesktop}>
         <img
-          src={user.photoURL ?? ""}
+          src={user?.photoURL ?? defaultImage}
+          onError={(e) => (e.currentTarget.src = defaultImage)}
           width="40"
           style={{ borderRadius: "100px" }}
           alt="profile"
@@ -49,13 +51,14 @@ function Profile({ user, handleSignOut }: { user: User; handleSignOut: MouseEven
 
       <div className={styles.profileMobile}>
         <img
-          src={user.photoURL ?? ""}
+          src={user?.photoURL ?? defaultImage}
+          onError={(e) => (e.currentTarget.src = defaultImage)}
           width="40"
           style={{ borderRadius: "100px" }}
           alt="profile"
           title={user.displayName ?? "User"}
           role="button"
-          onClick={()=>{setIsModalVisible(prev=>!prev)}}
+          onClick={() => { setIsModalVisible(prev => !prev) }}
         />
         {isModalVisible && <div className={styles.profileModal}>
           <p>Hi {user.displayName}! </p>
