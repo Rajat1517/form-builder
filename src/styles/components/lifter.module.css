@@ -24,6 +24,73 @@
     cursor: pointer;
 }
 
+.signOutButton{
+    background: none;
+    border: none;
+    box-sizing: border-box;
+    width: 90%;
+    height: 2.5rem;
+    display: flex;
+    color: white;
+    font-size: 1rem;
+    padding: 2px;
+    font-weight: 400;
+    justify-content: left;
+    gap: 2;
+    align-items: center;
+    cursor: pointer;
+    padding: 0;
+    border: 2px solid white;
+    border-radius: 10px;
+    margin: 1rem 0; 
+
+    &:active{
+        border-color: #1976D2;
+    }
+}
+
+.signOutIcon{
+    width: 40%;
+    height:80%;
+}
+
+.googleLogo{
+    border-radius: 5rem;
+    cursor: pointer;
+
+    &:hover{
+        opacity: 0.8;
+    }
+
+    &:focus{
+        box-shadow: 1px 1px 1px white ;
+    }
+    &:active{
+        box-shadow: 1px 1px 1px white ;
+    }
+
+    &:disabled{
+        opacity: 0.5;
+        box-shadow: none;
+    }
+}
+
+.formLink{
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    transform:  translateX(0);
+    transition: transform 0.3s ease-in-out;
+    display: inline-block   ;
+    &:hover{
+        transform: translateX(10px);
+    }
+}
+
+.linkIcon{
+    width: 10%;
+}
+
 .lifter{
     display: none;
 }
@@ -36,6 +103,29 @@
     cursor: grab;
 }
 
+.profileModal{
+    position: fixed;
+    right: 0;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    width: 20%;
+    margin: 1rem 0.5rem;
+    background-image: linear-gradient(to right,#cecece, #3e7795 98%);
+    height: fit-content;
+}
+
+.profileMobile{
+    display: none;
+}
+
+@media  screen and (max-width: 610px) {
+    .profileModal{
+        width: 40%;
+    }
+}
+
+
 @media screen and (max-width: 950px){
     .container{
         min-width: 100vw;
@@ -43,6 +133,7 @@
         justify-content: space-between;
         height: fit-content;
         align-items: center;
+        padding: 1rem;
         z-index: 1;
     }
     .lifter{
@@ -78,6 +169,14 @@
     .hopper{
         animation: hop 0.8s ease 0s infinite;
     }
+
+    .profileDesktop{
+        display: none;
+    }
+    .profileMobile{
+        display: inline-block;
+    }
+    
 }
 
 
