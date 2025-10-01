@@ -1,11 +1,12 @@
-import { useState, type MouseEventHandler } from "react";
+import { useContext, useState, type MouseEventHandler } from "react";
 import styles from "../styles/components/lifter.module.css";
 import type { BiulderState } from "../pages/Builder";
-import type { User, } from "firebase/auth";
 import Profile from "./Profile";
+import { AuthContext } from "../contexts/authContext";
 
-function Lifter({ builders, user, handleLogin, handleSignOut, isAuthenticating }: { builders: BiulderState[]; user: User | null; handleLogin: MouseEventHandler<HTMLButtonElement>; handleSignOut: MouseEventHandler<HTMLButtonElement>; isAuthenticating: boolean; }) {
+function Lifter({ builders, handleLogin, handleSignOut, isAuthenticating }: { builders: BiulderState[]; handleLogin: MouseEventHandler<HTMLButtonElement>; handleSignOut: MouseEventHandler<HTMLButtonElement>; isAuthenticating: boolean; }) {
   const [collapsed, setCollapsed] = useState(true);
+  const { user } = useContext(AuthContext);
   return (
     <div className={`${styles.container}`}>
       <div className={styles.logo}>
@@ -49,7 +50,7 @@ function Lifter({ builders, user, handleLogin, handleSignOut, isAuthenticating }
           <p draggable className={styles.draggable} onDragStart={(e) => {
             e.dataTransfer.setData("text/plain", "time");
           }}>Time Input</p>
-          <hr/>
+          <hr />
         </div>
       </div>
       <div>

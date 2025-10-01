@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import { auth, provider } from "../styles/utils/firebase";
-import { onAuthStateChanged, signInWithPopup, signOut, type User } from "firebase/auth";
+import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { AuthContext } from "../contexts/authContext";
 
 export default function useAuth() {
-  const [user, setUser] = useState<User | null>(null);
+  const { setUser } = useContext(AuthContext);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
 
   useEffect(() => {
@@ -30,6 +31,6 @@ export default function useAuth() {
     setUser(null);
   }, []);
 
-  return { user, handleLogin, handleSignOut, isAuthenticating };
+  return { handleLogin, handleSignOut, isAuthenticating };
 }
 

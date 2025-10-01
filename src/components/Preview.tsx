@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import type { Layout, ModalType, Option } from '../global.types';
 import styles from "../styles/components/preview.module.css";
 import {
@@ -20,9 +20,9 @@ import InfoModal from './InfoModal';
 
 import { db } from "../styles/utils/firebase";
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import type { User } from 'firebase/auth';
+import { AuthContext } from '../contexts/authContext';
 
-function Preview({ layout, formTitle, user }: { layout: Layout; formTitle: string; user: User | null }) {
+function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) {
 
     const [collapsed, setCollapsed] = useState(false);
     const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
@@ -32,6 +32,7 @@ function Preview({ layout, formTitle, user }: { layout: Layout; formTitle: strin
     const [title, setTitle] = useState('');
     const [modalType, setModalType] = useState<ModalType>("submitted");
     const [isPublishing, setIsPublishing] = useState(false);
+    const { user } = useContext(AuthContext);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
