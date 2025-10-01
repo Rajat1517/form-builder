@@ -60,6 +60,7 @@ function Preview({ layout, formTitle, user }: { layout: Layout; formTitle: strin
                 title: formTitle,
                 layout,
                 createdAt: serverTimestamp(),
+                UID: user?.uid,
             });
             setFormId(docRef.id);
             setIsLinkModalOpen(true);
