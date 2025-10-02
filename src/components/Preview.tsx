@@ -61,7 +61,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
                 title: formTitle,
                 layout,
                 createdAt: serverTimestamp(),
-                UID: user?.uid,
+                uid: user?.uid,
             });
             setFormId(docRef.id);
             setIsLinkModalOpen(true);
