@@ -3,13 +3,14 @@ import styles from "../styles/navbar.module.css";
 import { AuthContext } from "../contexts/authContext";
 import useAuth from "../hooks/useAuth";
 import Profile from "./Profile";
+import { Link } from "react-router";
 
 function Navbar() {
-    const {user} = useContext(AuthContext);
-    const {isAuthenticating, handleLogin, handleSignOut}= useAuth();
+  const { user } = useContext(AuthContext);
+  const { isAuthenticating, handleLogin, handleSignOut } = useAuth();
   return (
     <nav className={styles.container}>
-      <div className={styles.logo}>
+      <Link to="/" className={styles.logo}>
         <svg
           width="21"
           height="27"
@@ -24,8 +25,8 @@ function Navbar() {
             fill="#007AD3"
           />
         </svg>
-        <p>Form Builder</p>
-      </div>
+        <p style={{color: "white", textDecoration: "none"}}>Form Builder</p>
+      </Link>
       <div>
         {!user && (
           <button

@@ -60,8 +60,19 @@ function UserForms() {
                 </div>
               )
             })}
+            {
+              forms.length===0 && 
+               <div className={styles.formContainer}>
+                  <div>
+                    <h3>No forms pulished yet!</h3>
+                  </div>
+                  <div>
+                    <Link className={styles.link} to="/">Create a new form <svg viewBox="0 0 16 16" className={styles.linkIcon} xmlns="http://www.w3.org/2000/svg" version="1.1" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <polyline points="8.25 2.75,2.75 2.75,2.75 13.25,13.25 13.25,13.25 7.75"></polyline> <path d="m13.25 2.75-5.5 5.5m3-6.5h3.5v3.5"></path> </g></svg></Link>
+                  </div>
+                </div>
+            }
           </div> :
-          <ErrorBox error="Please login"/>
+          <ErrorBox error="Please login to view your forms."/>
         }
       </main>
     </div>

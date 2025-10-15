@@ -23,6 +23,8 @@
     align-items: center;
     justify-content: flex-start;
     gap: 0.5rem;
+    text-decoration: none;
+    color: white;
 }
 
 .heading{
