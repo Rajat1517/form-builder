@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import type { Layout, ModalType, Option } from '../global.types';
 import styles from "../styles/components/preview.module.css";
 import {
@@ -18,8 +18,9 @@ import TimePicker from './TimePicker';
 import LinkModal from './LinkModal';
 import InfoModal from './InfoModal';
 
-import { db } from "../utils/firebase";
+import { db } from "../styles/utils/firebase";
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { AuthContext } from '../contexts/authContext';
 
 function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) {
 
@@ -31,6 +32,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
     const [title, setTitle] = useState('');
     const [modalType, setModalType] = useState<ModalType>("submitted");
     const [isPublishing, setIsPublishing] = useState(false);
+    const { user } = useContext(AuthContext);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
@@ -59,6 +61,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
                 title: formTitle,
                 layout,
                 createdAt: serverTimestamp(),
+                uid: user?.uid,
             });
             setFormId(docRef.id);
             setIsLinkModalOpen(true);
@@ -115,10 +118,10 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
 
                             if (validation?.date) {
                                 const { min, max } = validation.date;
-                                if (min && min !==null) {
+                                if (min && min !== null) {
                                     validationProps = { ...validationProps, min: min.toISOString().split("T")[0] };
                                 }
-                                if (max && max!==null) {
+                                if (max && max !== null) {
                                     validationProps = { ...validationProps, max: max.toISOString().split("T")[0] };
                                 }
                             }
@@ -196,7 +199,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
 
                     })}
                     {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' sx={{ margin: "0.5rem" }}>Submit</Button>}
-                    {layout.length > 0 && <Button disabled={isPublishing} size='small' type='submit' color="primary" variant='contained' onClick={handlePublish} sx={{ margin: "0.5rem" }}>{isPublishing ? <span className={styles.loading}></span> : "Publish"}</Button>}
+                    <span title={!user ? "Sign In to publish" : ""}>{layout.length > 0 && <Button disabled={isPublishing || !user} size='small' type='submit' color="primary" variant='contained' onClick={handlePublish} sx={{ margin: "0.5rem" }}>{isPublishing ? <span className={styles.loading}></span> : "Publish"}</Button>}</span>
                 </form>
             </div>
             <LinkModal open={isLinkModalOpen} handleClose={() => setIsLinkModalOpen(false)} formId={formId} />

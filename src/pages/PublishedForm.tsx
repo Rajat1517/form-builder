@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router"
 import { addDoc, collection, doc, getDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../utils/firebase";
+import { db } from "../styles/utils/firebase";
 import type { Layout, ModalType, Option } from "../global.types";
 import InputLoader from "../components/InputLoader";
 import TitleLoader from "../components/TitleLoader";
@@ -85,6 +85,8 @@ function PublishedForm() {
     }
 
 
+
+
     return (
         <div className={styles.App}>
             {failed && <ErrorBox error={error} />}
@@ -125,10 +127,10 @@ function PublishedForm() {
 
                                     if (validation?.date) {
                                         const { min, max } = validation.date;
-                                        if (min && min !==null) {
+                                        if (min && min !== null) {
                                             validationProps = { ...validationProps, min: min.toDate().toISOString().split("T")[0] };
                                         }
-                                        if (max && max!==null) {
+                                        if (max && max !== null) {
                                             validationProps = { ...validationProps, max: max.toDate().toISOString().split("T")[0] };
                                         }
                                     }

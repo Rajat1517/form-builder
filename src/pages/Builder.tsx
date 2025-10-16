@@ -3,6 +3,7 @@ import type { Layout, Action } from "../global.types"
 import Lifter from '../components/Lifter';
 import Dropper from '../components/Dropper';
 import Preview from '../components/Preview';
+import useAuth from '../hooks/useAuth';
 
 export type BiulderState = { data: string; id: string; }
 
@@ -34,9 +35,10 @@ const Builder = () => {
     const [layout, dispatch] = useReducer(reducer, []);
     const [formTitle, setFormTitle] = useState("Untitled Form");
     const [builders, setBuilders] = useState<BiulderState[]>([]);
+    const { isAuthenticating, handleLogin, handleSignOut } = useAuth();
     return (
         <div className='App'>
-            <Lifter builders={builders} />
+            <Lifter builders={builders} isAuthenticating={isAuthenticating} handleSignOut={handleSignOut} handleLogin={handleLogin} />
             <div className='right-pane'>
                 <Dropper dispatch={dispatch} formTitle={formTitle} setFormTitle={setFormTitle} builders={builders} setBuilders={setBuilders} />
                 <Preview layout={layout} formTitle={formTitle} />
