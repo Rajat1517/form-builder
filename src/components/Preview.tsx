@@ -199,7 +199,7 @@ function Preview({ layout, formTitle }: { layout: Layout; formTitle: string; }) 
 
                     })}
                     {layout.length > 0 && <Button size='small' type='submit' color="primary" variant='contained' sx={{ margin: "0.5rem" }}>Submit</Button>}
-                    {layout.length > 0 && <Button disabled={isPublishing || !user} title={!user ? "Sign In to publish" : "njll"} size='small' type='submit' color="primary" variant='contained' onClick={handlePublish} sx={{ margin: "0.5rem" }}>{isPublishing ? <span className={styles.loading}></span> : "Publish"}</Button>}
+                    <span title={!user ? "Sign In to publish" : ""}>{layout.length > 0 && <Button disabled={isPublishing || !user} size='small' type='submit' color="primary" variant='contained' onClick={handlePublish} sx={{ margin: "0.5rem" }}>{isPublishing ? <span className={styles.loading}></span> : "Publish"}</Button>}</span>
                 </form>
             </div>
             <LinkModal open={isLinkModalOpen} handleClose={() => setIsLinkModalOpen(false)} formId={formId} />
