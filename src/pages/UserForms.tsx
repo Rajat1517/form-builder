@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import styles from "../styles/userforms.module.css";
 import { AuthContext } from "../contexts/authContext";
@@ -22,7 +22,7 @@ function UserForms() {
   const [forms, setForms] = useState<Form[]>([]);
   const { user } = useContext(AuthContext);
 
-  const loadForms = async () => {
+  const loadForms = useCallback(async () => {
     try {
       if (!user) return;
 
@@ -37,7 +37,7 @@ function UserForms() {
     } catch (err) {
       console.error(err);
     }
-  }
+  }, [user])
 
   const loadResponses = async (formId: string, formName: string) => {
     try {
@@ -54,7 +54,7 @@ function UserForms() {
 
   useEffect(() => {
     loadForms();
-  }, [user])
+  }, [user, loadForms])
 
   return (
     <div className={styles.App}>

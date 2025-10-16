@@ -13,7 +13,7 @@ export default function useAuth() {
       setIsAuthenticating(false);
     })
     return () => unSubscribe();
-  }, [])
+  }, [setUser])
 
   const handleLogin = useCallback(async () => {
     try {
@@ -24,12 +24,12 @@ export default function useAuth() {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [setUser]);
 
   const handleSignOut = useCallback(async () => {
     await signOut(auth);
     setUser(null);
-  }, []);
+  }, [setUser]);
 
   return { handleLogin, handleSignOut, isAuthenticating };
 }
